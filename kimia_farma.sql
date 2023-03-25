@@ -1,0 +1,2426 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.1
+-- Dumped by pg_dump version 15.1
+
+-- Started on 2023-02-28 17:23:59
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 215 (class 1259 OID 16554)
+-- Name: barang; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.barang (
+    kode_barang character varying(10) NOT NULL,
+    sektor "char",
+    nama_barang text,
+    tipe character varying(5),
+    nama_tipe character varying(20),
+    kode_lini integer,
+    lini character varying(50),
+    kemasan character varying(20)
+);
+
+
+ALTER TABLE public.barang OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16572)
+-- Name: barang_ds; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.barang_ds (
+    kode_barang character varying(10),
+    nama_barang text,
+    kemasan character varying(20),
+    harga double precision,
+    nama_tipe character varying(20),
+    kode_brand integer,
+    brand character varying(100)
+);
+
+
+ALTER TABLE public.barang_ds OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16549)
+-- Name: pelanggan; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pelanggan (
+    id_customer character varying(10) NOT NULL,
+    level character varying(20),
+    nama character varying(50),
+    id_cabang_sales character varying(5),
+    cabang_sales character varying(20),
+    id_group character varying(3),
+    "group" character varying(20)
+);
+
+
+ALTER TABLE public.pelanggan OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16569)
+-- Name: pelanggan_ds; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pelanggan_ds (
+    id_customer character varying(10),
+    level character varying(20),
+    nama character varying(50),
+    id_cabang_sales character varying(5),
+    cabang_sales character varying(20),
+    id_distributor character varying(5),
+    "group" character varying(20)
+);
+
+
+ALTER TABLE public.pelanggan_ds OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16577)
+-- Name: penjualan; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.penjualan (
+    id_distributor character varying(5),
+    id_cabang character varying(5),
+    id_invoice character varying(6),
+    tanggal date,
+    id_customer character varying(10),
+    id_barang character varying(10),
+    jumlah_barang bigint,
+    unit character varying(10),
+    harga double precision,
+    mata_uang character varying(5),
+    brand_id character varying(10),
+    lini character varying(20)
+);
+
+
+ALTER TABLE public.penjualan OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 16566)
+-- Name: penjualan_ds; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.penjualan_ds (
+    id_invoice character varying(6),
+    tanggal date,
+    id_customer character varying(10),
+    id_barang character varying(10),
+    jumlah_barang bigint,
+    unit character varying(10),
+    harga double precision,
+    mata_uang character varying(5)
+);
+
+
+ALTER TABLE public.penjualan_ds OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16585)
+-- Name: table_aggregate; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.table_aggregate (
+    id_penjualan text,
+    id_invoice character varying(6),
+    id_customer character varying(10),
+    id_barang character varying(10),
+    tanggal date,
+    month double precision,
+    id_distributor character varying(5),
+    customer character varying(50),
+    cabang_sales character varying(20),
+    "group" character varying(20),
+    nama_barang text,
+    brand character varying(100),
+    harga double precision,
+    jumlah_barang bigint,
+    total_harga double precision
+);
+
+
+ALTER TABLE public.table_aggregate OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16580)
+-- Name: table_base; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.table_base (
+    id_penjualan text,
+    id_invoice character varying(6),
+    id_customer character varying(10),
+    id_barang character varying(10),
+    tanggal date,
+    month double precision,
+    id_distributor character varying(5),
+    customer character varying(50),
+    cabang_sales character varying(20),
+    "group" character varying(20),
+    nama_barang text,
+    brand character varying(100),
+    harga double precision,
+    jumlah_barang bigint
+);
+
+
+ALTER TABLE public.table_base OWNER TO postgres;
+
+--
+-- TOC entry 3347 (class 0 OID 16554)
+-- Dependencies: 215
+-- Data for Name: barang; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.barang (kode_barang, sektor, nama_barang, tipe, nama_tipe, kode_lini, lini, kemasan) FROM stdin;
+BRG0001	P	ACYCLOVIR DUS	ZPJ1	Produk jadi	206	OGB & PH	DUS
+BRG0002	P	ALERGINE TABLET SALUT	ZPJ1	Produk jadi	203	ETIKAL	DUS
+BRG0003	P	AMPICILLIN	ZPJ1	Produk jadi	210	MARCKS	BOTOL
+BRG0004	P	TRAMADOL KAPSUL 50 MG	ZPJ1	Produk jadi	201	VNS	KAPSUL
+BRG0005	P	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	ZPJ1	Produk jadi	203	SLCYL	TABLET
+BRG0006	P	KETOCONAZOLE TABLET 200 MG	ZPJ1	Produk jadi	205	OGB & PH	TABLET
+BRG0007	P	ERGOTAMINE COFFEINE	ZPJ1	Produk jadi	206	ETIKAL	BOTOL
+BRG0008	P	TETRACYCLINE KAPSUL 250 MG	ZPJ1	Produk jadi	204	MARCKS	KAPSUL
+BRG0009	P	AMBROXOL HC	ZPJ1	Produk jadi	207	VNS	BOTOL
+BRG0010	P	PARACETAMOL	ZPJ1	Produk jadi	208	SLCYL	BOTOL
+\.
+
+
+--
+-- TOC entry 3350 (class 0 OID 16572)
+-- Dependencies: 218
+-- Data for Name: barang_ds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.barang_ds (kode_barang, nama_barang, kemasan, harga, nama_tipe, kode_brand, brand) FROM stdin;
+BRG0001	ACYCLOVIR DUS	DUS	96000	Produk jadi	206	OGB & PH
+BRG0002	ALERGINE TABLET SALUT	DUS	112000	Produk jadi	203	ETIKAL
+BRG0003	AMPICILLIN	BOTOL	17000	Produk jadi	210	MARCKS
+BRG0004	TRAMADOL KAPSUL 50 MG	TABLET	24500	Produk jadi	201	VNS
+BRG0005	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	TABLET	47000	Produk jadi	203	SLCYL
+BRG0006	KETOCONAZOLE TABLET 200 MG	TABLET	39000	Produk jadi	205	OGB & PH
+BRG0007	ERGOTAMINE COFFEINE	BOTOL	64700	Produk jadi	206	ETIKAL
+BRG0008	TETRACYCLINE KAPSUL 250 MG	TABLET	9800	Produk jadi	204	MARCKS
+BRG0009	AMBROXOL HC	BOTOL	31000	Produk jadi	207	VNS
+BRG0010	PARACETAMOL	BOTOL	21000	Produk jadi	208	SLCYL
+\.
+
+
+--
+-- TOC entry 3346 (class 0 OID 16549)
+-- Dependencies: 214
+-- Data for Name: pelanggan; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pelanggan (id_customer, level, nama, id_cabang_sales, cabang_sales, id_group, "group") FROM stdin;
+CUST55380	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55381	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55382	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55383	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55384	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55385	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55386	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55387	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55388	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55389	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55390	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55391	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55392	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55393	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55394	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55395	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55396	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55397	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55398	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55399	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55400	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55401	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55402	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55403	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55404	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55405	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55406	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55407	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55408	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55409	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55410	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55411	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55412	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55413	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55414	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55415	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55416	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55417	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55418	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55419	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55420	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55421	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55422	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55423	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55424	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55425	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55426	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55427	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55428	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55429	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55430	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55431	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55432	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55433	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55434	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55435	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55436	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55437	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55438	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55439	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55440	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55441	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55442	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55443	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55444	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55445	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55446	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55447	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55448	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55449	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55450	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55451	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55452	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55453	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55454	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55455	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55456	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55457	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55458	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55459	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55460	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55461	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55462	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55463	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55464	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55465	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55466	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55467	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55468	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55469	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55470	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55471	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55472	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55473	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55474	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55475	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55476	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55477	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55478	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55479	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55480	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55481	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55482	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55483	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55484	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55485	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55486	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55487	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55488	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55489	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55490	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55491	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55492	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55493	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55494	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55495	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55496	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55497	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55498	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55499	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55500	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55501	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55502	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55503	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55504	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55505	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55506	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55507	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55508	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55509	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55510	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55511	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55512	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55513	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55514	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55515	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55516	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55517	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55518	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55519	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55520	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55521	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55522	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55523	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55524	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55525	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55526	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55527	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55528	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55529	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55530	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55531	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55532	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55533	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55534	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55535	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55536	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55537	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55538	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55539	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55540	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55541	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55542	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55543	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55544	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55545	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55546	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55547	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55548	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55549	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55550	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55551	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55552	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55553	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55554	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55555	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55556	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55557	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55558	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55559	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55560	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55561	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55562	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55563	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55564	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55565	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55566	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55567	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55568	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55569	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55570	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55571	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55572	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55573	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55574	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55575	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55576	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55577	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55578	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55579	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55580	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55581	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55582	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55583	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55584	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55585	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55586	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55587	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55588	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55589	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55590	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55591	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55592	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55593	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55594	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55595	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55596	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55597	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55598	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55599	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55600	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55601	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55602	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55603	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55604	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55605	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55606	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55607	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55608	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55609	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55610	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55611	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55612	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55613	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55614	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55615	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55616	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55617	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55618	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55619	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55620	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55621	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55622	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55623	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55624	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55625	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55626	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55627	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55628	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55629	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55630	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55631	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55632	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55633	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55634	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55635	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55636	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55637	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55638	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55639	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55640	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55641	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55642	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55643	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55644	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55645	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55646	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55647	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55648	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55649	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55650	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55651	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55652	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55653	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55654	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55655	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55656	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55657	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55658	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55659	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55660	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55661	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55662	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55663	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55664	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55665	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55666	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55667	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55668	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55669	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55670	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55671	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55672	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55673	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55674	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55675	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55676	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55677	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55678	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55679	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55680	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55681	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55682	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55683	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55684	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55685	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55686	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55687	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55688	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55689	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55690	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55691	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55692	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55693	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55694	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55695	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55696	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55697	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55698	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55699	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55700	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55701	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55702	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55703	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55704	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55705	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55706	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55707	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55708	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55709	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55710	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55711	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55712	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55713	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55714	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55715	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55716	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55717	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55718	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55719	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55720	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55721	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+CUST55722	Company	APOTEK SINAR JAYA	CAB06	Bekasi	Z32	Apotek
+CUST55723	Company	APOTEK SAHABAT	CAB07	Padang	Z32	Apotek
+CUST55724	Company	KLINIK DR. ANDRI	CAB08	Lampung	Z31	Klinik
+CUST55725	Company	APOTEK TAPAK	CAB01	Aceh	Z32	Apotek
+CUST55726	Company	APOTEK MAJA	CAB02	Kuningan	Z32	Apotek
+CUST55727	Company	KLINIK GM	CAB03	Jakarta	Z31	Klinik
+CUST55728	Company	APOTEK MERDEKA	CAB04	Bandung	Z32	Apotek
+CUST55729	Company	KLINIK SAHABAT	CAB05	Tangerang	Z31	Klinik
+\.
+
+
+--
+-- TOC entry 3349 (class 0 OID 16569)
+-- Dependencies: 217
+-- Data for Name: pelanggan_ds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pelanggan_ds (id_customer, level, nama, id_cabang_sales, cabang_sales, id_distributor, "group") FROM stdin;
+CUST55380	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55381	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55382	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55383	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55384	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55385	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55386	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55387	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55388	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55389	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55390	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55391	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55392	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55393	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55394	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55395	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55396	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55397	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55398	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55399	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55400	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55401	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55402	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55403	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55404	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55405	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55406	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55407	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55408	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55409	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55410	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55411	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55412	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55413	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55414	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55415	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55416	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55417	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55418	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55419	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55420	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55421	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55422	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55423	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55424	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55425	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55426	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55427	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55428	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55429	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55430	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55431	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55432	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55433	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55434	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55435	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55436	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55437	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55438	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55439	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55440	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55441	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55442	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55443	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55444	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55445	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55446	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55447	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55448	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55449	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55450	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55451	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55452	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55453	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55454	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55455	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55456	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55457	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55458	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55459	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55460	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55461	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55462	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55463	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55464	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55465	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55466	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55467	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55468	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55469	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55470	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55471	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55472	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55473	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55474	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55475	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55476	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55477	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55478	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55479	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55480	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55481	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55482	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55483	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55484	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55485	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55486	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55487	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55488	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55489	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55490	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55491	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55492	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55493	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55494	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55495	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55496	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55497	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55498	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55499	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55500	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55501	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55502	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55503	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55504	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55505	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55506	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55507	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55508	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55509	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55510	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55511	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55512	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55513	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55514	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55515	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55516	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55517	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55518	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55519	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55520	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55521	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55522	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55523	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55524	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55525	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55526	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55527	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55528	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55529	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55530	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55531	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55532	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55533	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55534	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55535	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55536	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55537	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55538	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55539	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55540	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55541	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55542	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55543	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55544	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55545	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55546	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55547	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55548	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55549	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55550	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55551	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55552	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55553	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55554	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55555	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55556	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55557	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55558	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55559	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55560	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55561	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55562	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55563	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55564	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55565	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55566	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55567	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55568	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55569	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55570	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55571	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55572	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55573	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55574	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55575	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55576	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55577	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55578	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55579	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55580	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55581	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55582	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55583	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55584	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55585	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55586	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55587	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55588	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55589	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55590	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55591	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55592	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55593	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55594	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55595	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55596	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55597	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55598	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55599	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55600	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55601	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55602	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55603	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55604	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55605	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55606	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55607	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55608	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55609	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55610	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55611	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55612	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55613	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55614	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55615	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55616	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55617	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55618	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55619	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55620	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55621	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55622	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55623	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55624	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55625	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55626	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55627	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55628	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55629	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55630	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55631	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55632	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55633	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55634	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55635	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55636	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55637	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55638	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55639	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55640	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55641	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55642	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55643	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55644	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55645	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55646	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55647	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55648	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55649	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55650	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55651	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55652	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55653	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55654	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55655	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55656	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55657	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55658	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55659	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55660	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55661	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55662	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55663	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55664	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55665	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55666	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55667	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55668	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55669	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55670	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55671	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55672	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55673	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55674	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55675	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55676	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55677	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55678	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55679	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55680	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55681	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55682	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55683	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55684	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55685	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55686	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55687	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55688	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55689	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55690	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55691	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55692	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55693	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55694	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55695	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55696	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55697	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55698	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55699	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55700	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55701	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55702	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55703	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55704	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55705	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55706	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55707	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55708	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55709	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55710	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55711	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55712	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55713	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55714	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55715	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55716	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55717	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55718	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55719	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55720	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55721	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+CUST55722	Company	APOTEK SINAR JAYA	CAB06	Bekasi	TA	Apotek
+CUST55723	Company	APOTEK SAHABAT	CAB07	Padang	EPM	Apotek
+CUST55724	Company	KLINIK DR. ANDRI	CAB08	Lampung	TD	Klinik
+CUST55725	Company	APOTEK TAPAK	CAB01	Aceh	EPM	Apotek
+CUST55726	Company	APOTEK MAJA	CAB02	Kuningan	TA	Apotek
+CUST55727	Company	KLINIK GM	CAB03	Jakarta	TA	Klinik
+CUST55728	Company	APOTEK MERDEKA	CAB04	Bandung	TA	Apotek
+CUST55729	Company	KLINIK SAHABAT	CAB05	Tangerang	TD	Klinik
+\.
+
+
+--
+-- TOC entry 3351 (class 0 OID 16577)
+-- Dependencies: 219
+-- Data for Name: penjualan; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.penjualan (id_distributor, id_cabang, id_invoice, tanggal, id_customer, id_barang, jumlah_barang, unit, harga, mata_uang, brand_id, lini) FROM stdin;
+TD	CAB01	IN5997	2022-01-20	CUST55380	BRG0001	1	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6297	2022-01-20	CUST55381	BRG0002	5	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB02	IN6155	2022-01-21	CUST55382	BRG0003	9	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB03	IN6144	2022-01-22	CUST55383	BRG0004	13	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB04	IN6280	2022-01-23	CUST55384	BRG0005	1	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB05	IN6052	2022-01-23	CUST55385	BRG0006	5	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB06	IN6089	2022-01-25	CUST55386	BRG0007	9	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB07	IN6251	2022-01-23	CUST55387	BRG0008	1	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB08	IN6036	2022-01-27	CUST55388	BRG0009	23	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB09	IN6029	2022-01-28	CUST55389	BRG0010	4	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB10	IN6190	2022-01-23	CUST55390	BRG0001	2	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6287	2022-01-30	CUST55391	BRG0002	17	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6102	2022-01-31	CUST55392	BRG0003	11	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6301	2022-02-01	CUST55393	BRG0004	12	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6024	2022-01-27	CUST55394	BRG0005	12	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB04	IN6184	2022-01-28	CUST55395	BRG0006	25	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB05	IN6307	2022-01-23	CUST55396	BRG0007	14	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN6245	2022-01-30	CUST55397	BRG0008	34	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB07	IN6195	2022-01-31	CUST55398	BRG0009	67	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB08	IN6023	2022-02-01	CUST55399	BRG0010	15	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB09	IN6113	2022-01-27	CUST55400	BRG0001	12	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB10	IN6141	2022-01-28	CUST55401	BRG0002	25	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6125	2022-01-23	CUST55402	BRG0003	14	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB01	IN6176	2022-01-30	CUST55403	BRG0004	18	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB02	IN6175	2022-01-31	CUST55404	BRG0005	18	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB03	IN6259	2022-02-01	CUST55405	BRG0006	19	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB01	IN6173	2022-01-27	CUST55406	BRG0001	12	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6013	2022-01-28	CUST55407	BRG0002	25	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6086	2022-01-23	CUST55408	BRG0003	14	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB03	IN6108	2022-01-30	CUST55409	BRG0004	21	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB04	IN6321	2022-01-31	CUST55410	BRG0001	22	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN5994	2022-02-01	CUST55411	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB06	IN6146	2022-01-27	CUST55412	BRG0003	25	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB07	IN6230	2022-01-28	CUST55413	BRG0004	14	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN5991	2022-01-23	CUST55414	BRG0005	24	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB09	IN6281	2022-01-30	CUST55415	BRG0006	10	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB10	IN6226	2022-01-31	CUST55416	BRG0007	23	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6063	2022-02-01	CUST55417	BRG0008	12	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6131	2022-01-27	CUST55418	BRG0009	10	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB02	IN6262	2022-01-28	CUST55419	BRG0010	67	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB03	IN6028	2022-01-23	CUST55420	BRG0001	98	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6163	2022-01-30	CUST55421	BRG0002	5	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6191	2022-01-31	CUST55422	BRG0003	4	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6274	2022-02-01	CUST55423	BRG0004	8	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6003	2022-01-27	CUST55424	BRG0005	9	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB04	IN6247	2022-01-28	CUST55425	BRG0006	10	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB05	IN6311	2022-01-23	CUST55426	BRG0007	7	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN6248	2022-01-30	CUST55427	BRG0008	100	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB07	IN6042	2022-01-31	CUST55428	BRG0009	67	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB08	IN6133	2022-02-01	CUST55429	BRG0010	78	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB09	IN6306	2022-01-27	CUST55430	BRG0001	45	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB10	IN6253	2022-01-28	CUST55431	BRG0002	34	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN5980	2022-01-23	CUST55432	BRG0003	20	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB01	IN6104	2022-01-30	CUST55433	BRG0004	45	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB02	IN6050	2022-01-31	CUST55434	BRG0005	34	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB03	IN6054	2022-02-01	CUST55435	BRG0006	34	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB01	IN6219	2022-01-27	CUST55436	BRG0001	34	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6053	2022-01-28	CUST55437	BRG0002	44	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6217	2022-01-23	CUST55438	BRG0003	5	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB03	IN6323	2022-01-30	CUST55439	BRG0004	6	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB04	IN6241	2022-01-31	CUST55440	BRG0001	79	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN6134	2022-02-01	CUST55441	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB06	IN6124	2022-01-27	CUST55442	BRG0003	95	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB07	IN5981	2022-01-28	CUST55443	BRG0004	76	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN6220	2022-01-23	CUST55444	BRG0005	48	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB09	IN6122	2022-01-30	CUST55445	BRG0006	21	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB10	IN6255	2022-01-31	CUST55446	BRG0007	22	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6005	2022-02-01	CUST55447	BRG0008	12	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6327	2022-01-27	CUST55448	BRG0009	25	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB02	IN6119	2022-01-28	CUST55449	BRG0010	14	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB03	IN6233	2022-01-23	CUST55450	BRG0001	24	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6235	2022-01-30	CUST55451	BRG0002	10	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6263	2022-01-31	CUST55452	BRG0003	130	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6269	2022-02-01	CUST55453	BRG0004	12	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6188	2022-01-27	CUST55454	BRG0005	10	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB04	IN6116	2022-01-28	CUST55455	BRG0006	67	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB05	IN6216	2022-01-23	CUST55456	BRG0007	98	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB06	IN6099	2022-01-30	CUST55457	BRG0008	5	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB07	IN6326	2022-01-31	CUST55458	BRG0009	4	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB08	IN6267	2022-02-01	CUST55459	BRG0010	8	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB09	IN6238	2022-01-27	CUST55460	BRG0001	9	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB10	IN6214	2022-01-28	CUST55461	BRG0002	21	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6318	2022-01-23	CUST55462	BRG0003	22	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB01	IN6256	2022-01-30	CUST55463	BRG0004	12	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB02	IN6048	2022-01-31	CUST55464	BRG0005	25	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB03	IN6120	2022-02-01	CUST55465	BRG0006	14	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB01	IN6161	2022-01-27	CUST55466	BRG0001	24	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6292	2022-01-28	CUST55467	BRG0002	10	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6286	2022-01-23	CUST55468	BRG0003	120	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB03	IN6008	2022-01-30	CUST55469	BRG0004	12	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB04	IN6040	2022-01-31	CUST55470	BRG0001	10	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN6084	2022-02-01	CUST55471	BRG0002	67	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB06	IN6074	2022-01-27	CUST55472	BRG0003	98	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB07	IN6200	2022-01-28	CUST55473	BRG0004	5	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB08	IN6065	2022-01-23	CUST55474	BRG0005	4	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB09	IN6208	2022-01-30	CUST55475	BRG0006	8	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB10	IN6148	2022-01-31	CUST55476	BRG0007	9	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6072	2022-02-01	CUST55477	BRG0008	1	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6095	2022-01-27	CUST55478	BRG0009	5	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB02	IN6049	2022-01-28	CUST55479	BRG0010	9	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB03	IN6039	2022-01-23	CUST55480	BRG0001	13	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6276	2022-01-30	CUST55481	BRG0002	1	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6015	2022-01-31	CUST55482	BRG0003	5	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB02	IN6185	2022-02-01	CUST55483	BRG0004	9	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB03	IN6258	2022-01-27	CUST55484	BRG0005	1	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB04	IN6070	2022-01-28	CUST55485	BRG0006	23	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB05	IN6210	2022-01-23	CUST55486	BRG0007	4	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB06	IN6083	2022-01-30	CUST55487	BRG0008	2	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB07	IN6322	2022-01-31	CUST55488	BRG0009	17	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB08	IN6291	2022-02-01	CUST55489	BRG0010	11	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB09	IN6062	2022-01-27	CUST55490	BRG0001	12	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB10	IN6167	2022-01-28	CUST55491	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6289	2022-01-23	CUST55492	BRG0003	25	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB01	IN6305	2022-01-30	CUST55493	BRG0004	14	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB02	IN6079	2022-01-31	CUST55494	BRG0005	34	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB03	IN6320	2022-02-01	CUST55495	BRG0006	67	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB01	IN6103	2022-01-27	CUST55496	BRG0001	15	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6172	2022-01-28	CUST55497	BRG0002	12	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6183	2022-01-23	CUST55498	BRG0003	25	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB03	IN6278	2022-01-30	CUST55499	BRG0004	14	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB04	IN6186	2022-01-31	CUST55500	BRG0001	18	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB05	IN6211	2022-02-01	CUST55501	BRG0002	18	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB06	IN6118	2022-01-27	CUST55502	BRG0003	19	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB07	IN6162	2022-01-28	CUST55503	BRG0004	12	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB08	IN6221	2022-01-23	CUST55504	BRG0005	25	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB09	IN6170	2022-01-30	CUST55505	BRG0006	14	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB10	IN6045	2022-01-31	CUST55506	BRG0007	21	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6300	2022-02-01	CUST55507	BRG0008	22	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6228	2022-01-27	CUST55508	BRG0009	12	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB02	IN6199	2022-01-28	CUST55509	BRG0010	25	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB03	IN6215	2022-01-23	CUST55510	BRG0001	14	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB01	IN6107	2022-01-30	CUST55511	BRG0002	24	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6152	2022-01-31	CUST55512	BRG0003	10	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB02	IN6017	2022-02-01	CUST55513	BRG0004	23	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB03	IN6299	2022-01-27	CUST55514	BRG0005	12	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB04	IN6064	2022-01-28	CUST55515	BRG0006	10	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB05	IN6308	2022-01-23	CUST55516	BRG0007	67	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB06	IN6038	2022-01-30	CUST55517	BRG0008	98	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB07	IN6130	2022-01-31	CUST55518	BRG0009	5	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB08	IN6293	2022-02-01	CUST55519	BRG0010	4	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB09	IN6205	2022-01-27	CUST55520	BRG0001	8	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB10	IN6325	2022-01-28	CUST55521	BRG0002	9	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6317	2022-01-23	CUST55522	BRG0003	10	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB01	IN6025	2022-01-30	CUST55523	BRG0004	7	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB02	IN6203	2022-01-31	CUST55524	BRG0005	100	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB03	IN6243	2022-02-01	CUST55525	BRG0006	67	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB01	IN6136	2022-01-27	CUST55526	BRG0001	78	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB01	IN6314	2022-01-28	CUST55527	BRG0002	45	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB02	IN6202	2022-01-23	CUST55528	BRG0003	34	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB03	IN6279	2022-01-30	CUST55529	BRG0004	20	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB04	IN6196	2022-01-31	CUST55530	BRG0001	45	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB05	IN6266	2022-02-01	CUST55531	BRG0002	34	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB06	IN6058	2022-01-27	CUST55532	BRG0003	34	DUS	10690.6	IDR	BRND003	MARCKS
+TA	CAB07	IN6246	2022-01-28	CUST55533	BRG0004	34	DUS	8700.7	IDR	BRND004	VNS
+EPM	CAB08	IN6242	2022-01-23	CUST55534	BRG0005	44	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB09	IN5982	2022-01-30	CUST55535	BRG0006	5	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB10	IN6068	2022-01-31	CUST55536	BRG0007	6	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB01	IN6128	2022-02-01	CUST55537	BRG0008	79	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB01	IN6066	2022-01-27	CUST55538	BRG0009	12	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB02	IN6303	2022-01-28	CUST55539	BRG0010	95	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB03	IN6284	2022-01-23	CUST55540	BRG0001	76	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB01	IN6240	2022-01-30	CUST55541	BRG0002	48	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6244	2022-01-31	CUST55542	BRG0003	21	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB02	IN6060	2022-02-01	CUST55543	BRG0004	22	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB03	IN6254	2022-02-02	CUST55544	BRG0005	12	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB04	IN6171	2022-02-03	CUST55545	BRG0006	25	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB05	IN6002	2022-02-04	CUST55546	BRG0007	14	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB06	IN6261	2022-02-05	CUST55547	BRG0008	24	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB07	IN6088	2022-02-06	CUST55548	BRG0009	10	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB08	IN6181	2022-02-07	CUST55549	BRG0010	130	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB09	IN6135	2022-02-08	CUST55550	BRG0001	12	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB10	IN5988	2022-02-09	CUST55551	BRG0002	10	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB01	IN6234	2022-02-10	CUST55552	BRG0003	67	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB01	IN6319	2022-02-11	CUST55553	BRG0004	98	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB02	IN6006	2022-02-12	CUST55554	BRG0005	5	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB03	IN6147	2022-02-13	CUST55555	BRG0006	4	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB01	IN6129	2022-02-14	CUST55556	BRG0001	8	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB01	IN5986	2022-02-15	CUST55557	BRG0002	9	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB02	IN6026	2022-02-16	CUST55558	BRG0003	21	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB03	IN6224	2022-02-17	CUST55559	BRG0004	22	DUS	6940.3	IDR	BRND010	SLCYL
+TA	CAB04	IN6087	2022-02-18	CUST55560	BRG0001	12	DUS	1169.91	IDR	BRND001	OGB & PH
+EPM	CAB05	IN6096	2022-02-19	CUST55561	BRG0002	25	DUS	2337.5	IDR	BRND002	ETIKAL
+TD	CAB06	IN6034	2022-02-20	CUST55562	BRG0003	14	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB07	IN6231	2022-02-21	CUST55563	BRG0004	24	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB08	IN6260	2022-02-22	CUST55564	BRG0005	10	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB09	IN6302	2022-02-23	CUST55565	BRG0006	120	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB10	IN6061	2022-02-24	CUST55566	BRG0007	12	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB01	IN6011	2022-02-25	CUST55567	BRG0008	10	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB01	IN6275	2022-02-26	CUST55568	BRG0009	67	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB02	IN6114	2022-02-27	CUST55569	BRG0010	98	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB03	IN6041	2022-02-28	CUST55570	BRG0001	5	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB01	IN6069	2022-03-01	CUST55571	BRG0002	4	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN6239	2022-03-02	CUST55572	BRG0003	8	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB02	IN6137	2022-03-03	CUST55573	BRG0004	9	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB03	IN6189	2022-03-04	CUST55574	BRG0005	1	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB04	IN6229	2022-03-05	CUST55575	BRG0006	5	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB05	IN6110	2022-03-06	CUST55576	BRG0007	9	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB06	IN6182	2022-03-07	CUST55577	BRG0008	13	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB07	IN6164	2022-03-08	CUST55578	BRG0009	1	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB08	IN6016	2022-03-09	CUST55579	BRG0010	5	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB09	IN6043	2022-03-10	CUST55580	BRG0001	9	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB10	IN6020	2022-03-11	CUST55581	BRG0002	1	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN6206	2022-03-12	CUST55582	BRG0003	23	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB01	IN6055	2022-03-13	CUST55583	BRG0004	4	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB02	IN6092	2022-03-14	CUST55584	BRG0005	2	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB03	IN6177	2022-03-15	CUST55585	BRG0006	17	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB01	IN6209	2022-03-16	CUST55586	BRG0001	11	DUS	4592.1	IDR	BRND007	ETIKAL
+TA	CAB01	IN6250	2022-03-17	CUST55587	BRG0002	12	DUS	3991.9	IDR	BRND008	MARCKS
+EPM	CAB02	IN6193	2022-03-18	CUST55588	BRG0003	12	DUS	5780.7	IDR	BRND009	VNS
+TD	CAB03	IN6081	2022-03-19	CUST55589	BRG0004	25	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB04	IN6149	2022-03-20	CUST55590	BRG0001	14	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB05	IN6014	2022-03-21	CUST55591	BRG0002	34	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB06	IN6290	2022-03-22	CUST55592	BRG0003	67	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB07	IN6051	2022-03-23	CUST55593	BRG0004	15	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB08	IN6076	2022-03-24	CUST55594	BRG0005	12	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB09	IN6140	2022-03-25	CUST55595	BRG0006	25	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB10	IN6080	2022-03-26	CUST55596	BRG0007	14	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6153	2022-03-27	CUST55597	BRG0008	18	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB01	IN5979	2022-03-28	CUST55598	BRG0009	18	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB02	IN6098	2022-03-29	CUST55599	BRG0010	19	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB03	IN6078	2022-03-30	CUST55600	BRG0001	12	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB01	IN6085	2022-03-31	CUST55601	BRG0002	25	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN6018	2022-04-01	CUST55602	BRG0003	14	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB02	IN6001	2022-04-02	CUST55603	BRG0004	21	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB03	IN6271	2022-04-03	CUST55604	BRG0005	22	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB04	IN6207	2022-04-04	CUST55605	BRG0006	12	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB05	IN6187	2022-04-05	CUST55606	BRG0007	25	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN5995	2022-04-06	CUST55607	BRG0008	14	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB07	IN6156	2022-04-07	CUST55608	BRG0009	24	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB08	IN6232	2022-04-08	CUST55609	BRG0010	10	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB09	IN5998	2022-04-09	CUST55610	BRG0001	23	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB10	IN6227	2022-04-10	CUST55611	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN6027	2022-04-11	CUST55612	BRG0003	10	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB01	IN6157	2022-04-12	CUST55613	BRG0004	67	DUS	8700.7	IDR	BRND004	VNS
+TA	CAB02	IN6180	2022-04-13	CUST55614	BRG0005	98	DUS	5648.3	IDR	BRND005	SLCYL
+EPM	CAB03	IN6257	2022-04-14	CUST55615	BRG0006	5	DUS	2819.2	IDR	BRND006	OGB & PH
+TD	CAB01	IN6031	2022-04-15	CUST55616	BRG0001	4	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6082	2022-04-16	CUST55617	BRG0002	8	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB02	IN6174	2022-04-17	CUST55618	BRG0003	9	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB03	IN6237	2022-04-18	CUST55619	BRG0004	10	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB04	IN6021	2022-04-19	CUST55620	BRG0001	7	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB05	IN6056	2022-04-20	CUST55621	BRG0002	100	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB06	IN5983	2022-04-21	CUST55622	BRG0003	67	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB07	IN6139	2022-04-22	CUST55623	BRG0004	78	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN6126	2022-04-23	CUST55624	BRG0005	45	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB09	IN6127	2022-04-24	CUST55625	BRG0006	34	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB10	IN6035	2022-04-25	CUST55626	BRG0007	20	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6309	2022-04-26	CUST55627	BRG0008	45	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB01	IN6073	2022-04-27	CUST55628	BRG0009	34	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB02	IN6277	2022-04-28	CUST55629	BRG0010	34	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB03	IN6197	2022-04-29	CUST55630	BRG0001	34	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB01	IN6225	2022-04-30	CUST55631	BRG0002	44	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN5999	2022-05-01	CUST55632	BRG0003	5	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB02	IN6223	2022-05-02	CUST55633	BRG0004	6	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6273	2022-05-03	CUST55634	BRG0005	79	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB04	IN6047	2022-04-26	CUST55635	BRG0006	12	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB05	IN6071	2022-04-27	CUST55636	BRG0007	95	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN6009	2022-04-28	CUST55637	BRG0008	76	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB07	IN6075	2022-04-16	CUST55638	BRG0009	48	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB08	IN6218	2022-04-17	CUST55639	BRG0010	21	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB09	IN5985	2022-04-18	CUST55640	BRG0001	22	DUS	1169.91	IDR	BRND001	OGB & PH
+TA	CAB10	IN6154	2022-04-19	CUST55641	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+EPM	CAB01	IN6145	2022-04-20	CUST55642	BRG0003	25	DUS	10690.6	IDR	BRND003	MARCKS
+TD	CAB01	IN6315	2022-04-21	CUST55643	BRG0004	14	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB02	IN6168	2022-05-13	CUST55644	BRG0005	24	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB03	IN6192	2022-05-14	CUST55645	BRG0006	10	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB01	IN6285	2022-05-15	CUST55646	BRG0001	130	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6077	2022-05-16	CUST55647	BRG0002	12	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB02	IN6057	2022-05-17	CUST55648	BRG0003	10	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB03	IN6252	2022-05-18	CUST55649	BRG0004	67	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB04	IN6272	2022-05-19	CUST55650	BRG0001	98	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN6150	2022-05-20	CUST55651	BRG0002	5	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB06	IN6298	2022-05-21	CUST55652	BRG0003	4	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB07	IN6295	2022-05-22	CUST55653	BRG0004	8	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN6022	2022-05-23	CUST55654	BRG0005	9	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB09	IN6090	2022-05-24	CUST55655	BRG0006	21	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB10	IN5996	2022-05-25	CUST55656	BRG0007	22	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6111	2022-05-26	CUST55657	BRG0008	12	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB01	IN6194	2022-04-18	CUST55658	BRG0009	25	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB02	IN5987	2022-04-19	CUST55659	BRG0010	14	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB03	IN6313	2022-04-20	CUST55660	BRG0001	24	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6138	2022-04-18	CUST55661	BRG0002	10	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6316	2022-04-19	CUST55662	BRG0003	120	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6019	2022-04-20	CUST55663	BRG0004	12	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6283	2022-05-19	CUST55664	BRG0005	10	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB04	IN6169	2022-05-20	CUST55665	BRG0006	67	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB05	IN6121	2022-05-21	CUST55666	BRG0007	98	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN6117	2022-05-22	CUST55667	BRG0008	5	DUS	3991.9	IDR	BRND008	MARCKS
+TA	CAB07	IN6201	2022-05-23	CUST55668	BRG0009	4	DUS	5780.7	IDR	BRND009	VNS
+EPM	CAB08	IN6179	2022-05-24	CUST55669	BRG0010	8	DUS	6940.3	IDR	BRND010	SLCYL
+TD	CAB09	IN5978	2022-05-25	CUST55670	BRG0001	9	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB10	IN5993	2022-05-26	CUST55671	BRG0002	1	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6160	2022-05-27	CUST55672	BRG0003	5	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB01	IN6282	2022-05-28	CUST55673	BRG0004	9	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB02	IN6093	2022-05-29	CUST55674	BRG0005	13	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB03	IN6166	2022-05-30	CUST55675	BRG0006	1	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB01	IN6010	2022-05-31	CUST55676	BRG0001	5	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6100	2022-06-01	CUST55677	BRG0002	9	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6222	2022-06-02	CUST55678	BRG0003	1	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB03	IN6032	2022-06-03	CUST55679	BRG0004	23	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB04	IN6198	2022-06-04	CUST55680	BRG0001	4	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN6212	2022-06-05	CUST55681	BRG0002	2	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB06	IN6288	2022-06-06	CUST55682	BRG0003	17	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB07	IN6059	2022-06-07	CUST55683	BRG0004	11	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN6236	2022-06-08	CUST55684	BRG0005	12	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB09	IN6296	2022-06-09	CUST55685	BRG0006	12	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB10	IN6324	2022-06-10	CUST55686	BRG0007	25	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB01	IN6091	2022-06-11	CUST55687	BRG0008	14	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6033	2022-06-12	CUST55688	BRG0009	34	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB02	IN6159	2022-06-13	CUST55689	BRG0010	67	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB03	IN6264	2022-06-14	CUST55690	BRG0001	15	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6046	2022-06-15	CUST55691	BRG0002	12	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6268	2022-06-16	CUST55692	BRG0003	25	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6310	2022-04-30	CUST55693	BRG0004	14	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6044	2022-05-01	CUST55694	BRG0005	18	DUS	5648.3	IDR	BRND005	SLCYL
+TA	CAB04	IN6178	2022-05-02	CUST55695	BRG0006	18	DUS	2819.2	IDR	BRND006	OGB & PH
+EPM	CAB05	IN6270	2022-05-03	CUST55696	BRG0007	19	DUS	4592.1	IDR	BRND007	ETIKAL
+TD	CAB06	IN6123	2022-06-16	CUST55697	BRG0008	12	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB07	IN6265	2022-04-30	CUST55698	BRG0009	25	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB08	IN6158	2022-05-01	CUST55699	BRG0010	14	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB09	IN6105	2022-05-02	CUST55700	BRG0001	21	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB10	IN6213	2022-05-03	CUST55701	BRG0002	22	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6109	2022-06-16	CUST55702	BRG0003	12	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB01	IN6249	2022-04-30	CUST55703	BRG0004	25	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB02	IN6067	2022-05-01	CUST55704	BRG0005	14	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB03	IN6143	2022-05-02	CUST55705	BRG0006	24	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB01	IN5990	2022-05-03	CUST55706	BRG0001	10	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN5992	2022-06-16	CUST55707	BRG0002	23	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB02	IN6132	2022-04-30	CUST55708	BRG0003	12	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB03	IN6030	2022-05-01	CUST55709	BRG0004	10	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB04	IN6094	2022-05-02	CUST55710	BRG0001	67	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB05	IN6294	2022-05-03	CUST55711	BRG0002	98	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB06	IN6012	2022-06-16	CUST55712	BRG0003	5	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB07	IN6106	2022-04-30	CUST55713	BRG0004	4	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB08	IN5984	2022-05-01	CUST55714	BRG0005	8	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB09	IN6007	2022-05-02	CUST55715	BRG0006	9	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB10	IN6115	2022-05-03	CUST55716	BRG0007	10	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB01	IN6000	2022-06-16	CUST55717	BRG0008	7	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB01	IN6097	2022-04-30	CUST55718	BRG0009	100	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB02	IN5989	2022-05-01	CUST55719	BRG0010	67	DUS	6940.3	IDR	BRND010	SLCYL
+EPM	CAB03	IN6151	2022-05-02	CUST55720	BRG0001	78	DUS	1169.91	IDR	BRND001	OGB & PH
+TD	CAB01	IN6037	2022-05-03	CUST55721	BRG0002	45	DUS	2337.5	IDR	BRND002	ETIKAL
+TA	CAB01	IN6165	2022-06-16	CUST55722	BRG0003	34	DUS	10690.6	IDR	BRND003	MARCKS
+EPM	CAB02	IN6101	2022-04-30	CUST55723	BRG0004	20	DUS	8700.7	IDR	BRND004	VNS
+TD	CAB03	IN6142	2022-05-01	CUST55724	BRG0005	45	DUS	5648.3	IDR	BRND005	SLCYL
+TD	CAB04	IN6312	2022-05-02	CUST55725	BRG0006	34	DUS	2819.2	IDR	BRND006	OGB & PH
+TA	CAB05	IN6112	2022-05-03	CUST55726	BRG0007	34	DUS	4592.1	IDR	BRND007	ETIKAL
+EPM	CAB06	IN6204	2022-06-16	CUST55727	BRG0008	34	DUS	3991.9	IDR	BRND008	MARCKS
+TD	CAB07	IN6304	2022-04-30	CUST55728	BRG0009	44	DUS	5780.7	IDR	BRND009	VNS
+TA	CAB08	IN6004	2022-05-01	CUST55729	BRG0010	5	DUS	6940.3	IDR	BRND010	SLCYL
+\.
+
+
+--
+-- TOC entry 3348 (class 0 OID 16566)
+-- Dependencies: 216
+-- Data for Name: penjualan_ds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.penjualan_ds (id_invoice, tanggal, id_customer, id_barang, jumlah_barang, unit, harga, mata_uang) FROM stdin;
+IN5997	2022-01-20	CUST55380	BRG0001	1	DUS	96000	IDR
+IN5997	2022-01-20	CUST55380	BRG0002	4	DUS	112000	IDR
+IN5997	2022-01-20	CUST55380	BRG0003	6	BOTOL	17000	IDR
+IN5997	2022-01-20	CUST55380	BRG0004	11	TABLET	24500	IDR
+IN5997	2022-01-20	CUST55380	BRG0005	40	TABLET	47000	IDR
+IN6297	2022-01-20	CUST55381	BRG0002	5	DUS	112000	IDR
+IN6297	2022-01-20	CUST55381	BRG0005	15	TABLET	47000	IDR
+IN6297	2022-01-20	CUST55381	BRG0007	12	BOTOL	64700	IDR
+IN6297	2022-01-20	CUST55381	BRG0008	30	TABLET	9800	IDR
+IN6155	2022-01-21	CUST55382	BRG0003	9	BOTOL	17000	IDR
+IN6155	2022-01-21	CUST55382	BRG0004	12	TABLET	24500	IDR
+IN6155	2022-01-21	CUST55382	BRG0005	12	TABLET	47000	IDR
+IN6155	2022-01-21	CUST55382	BRG0006	22	TABLET	39000	IDR
+IN6155	2022-01-21	CUST55382	BRG0007	10	BOTOL	64700	IDR
+IN6155	2022-01-21	CUST55382	BRG0008	25	TABLET	9800	IDR
+IN6155	2022-01-21	CUST55382	BRG0009	25	BOTOL	31000	IDR
+IN6155	2022-01-21	CUST55382	BRG0010	12	BOTOL	21000	IDR
+IN6144	2022-01-22	CUST55383	BRG0004	13	TABLET	24500	IDR
+IN6144	2022-01-22	CUST55383	BRG0007	13	BOTOL	64700	IDR
+IN6144	2022-01-22	CUST55383	BRG0008	13	TABLET	9800	IDR
+IN6144	2022-01-22	CUST55383	BRG0009	13	BOTOL	31000	IDR
+IN6144	2022-01-22	CUST55383	BRG0010	13	BOTOL	21000	IDR
+IN6280	2022-01-23	CUST55384	BRG0001	2	DUS	96000	IDR
+IN6280	2022-01-23	CUST55384	BRG0002	3	DUS	112000	IDR
+IN6280	2022-01-23	CUST55384	BRG0005	5	TABLET	47000	IDR
+IN6280	2022-01-23	CUST55384	BRG0006	25	TABLET	39000	IDR
+IN6280	2022-01-23	CUST55384	BRG0007	10	BOTOL	64700	IDR
+IN6280	2022-01-23	CUST55384	BRG0009	10	BOTOL	31000	IDR
+IN6280	2022-01-23	CUST55384	BRG0010	10	BOTOL	21000	IDR
+IN6052	2022-01-23	CUST55385	BRG0006	5	TABLET	39000	IDR
+IN6052	2022-01-23	CUST55385	BRG0009	5	BOTOL	31000	IDR
+IN6052	2022-01-23	CUST55385	BRG0010	5	BOTOL	21000	IDR
+IN6089	2022-01-25	CUST55386	BRG0007	9	BOTOL	64700	IDR
+IN6251	2022-01-23	CUST55387	BRG0001	2	DUS	96000	IDR
+IN6251	2022-01-23	CUST55387	BRG0002	2	DUS	112000	IDR
+IN6251	2022-01-23	CUST55387	BRG0003	12	BOTOL	17000	IDR
+IN6251	2022-01-23	CUST55387	BRG0004	5	TABLET	24500	IDR
+IN6251	2022-01-23	CUST55387	BRG0005	5	TABLET	47000	IDR
+IN6251	2022-01-23	CUST55387	BRG0006	5	TABLET	39000	IDR
+IN6251	2022-01-23	CUST55387	BRG0007	12	BOTOL	64700	IDR
+IN6251	2022-01-23	CUST55387	BRG0008	5	TABLET	9800	IDR
+IN6251	2022-01-23	CUST55387	BRG0009	12	BOTOL	31000	IDR
+IN6036	2022-01-27	CUST55388	BRG0003	15	BOTOL	17000	IDR
+IN6036	2022-01-27	CUST55388	BRG0004	12	TABLET	24500	IDR
+IN6036	2022-01-27	CUST55388	BRG0009	22	BOTOL	31000	IDR
+IN6036	2022-01-27	CUST55388	BRG0010	10	BOTOL	21000	IDR
+IN6029	2022-01-28	CUST55389	BRG0001	1	DUS	96000	IDR
+IN6029	2022-01-28	CUST55389	BRG0003	5	BOTOL	17000	IDR
+IN6029	2022-01-28	CUST55389	BRG0004	7	TABLET	24500	IDR
+IN6029	2022-01-28	CUST55389	BRG0005	7	TABLET	47000	IDR
+IN6029	2022-01-28	CUST55389	BRG0006	7	TABLET	39000	IDR
+IN6029	2022-01-28	CUST55389	BRG0007	14	BOTOL	64700	IDR
+IN6029	2022-01-28	CUST55389	BRG0008	8	TABLET	9800	IDR
+IN6029	2022-01-28	CUST55389	BRG0009	18	BOTOL	31000	IDR
+IN6029	2022-01-28	CUST55389	BRG0010	20	BOTOL	21000	IDR
+IN6190	2022-01-23	CUST55390	BRG0001	40	DUS	96000	IDR
+IN6287	2022-01-30	CUST55391	BRG0002	17	DUS	112000	IDR
+IN6287	2022-01-30	CUST55391	BRG0006	20	TABLET	39000	IDR
+IN6287	2022-01-30	CUST55391	BRG0010	16	BOTOL	21000	IDR
+IN6102	2022-01-31	CUST55392	BRG0003	11	BOTOL	17000	IDR
+IN6102	2022-01-31	CUST55392	BRG0007	24	BOTOL	64700	IDR
+IN6301	2022-02-01	CUST55393	BRG0004	12	TABLET	24500	IDR
+IN6301	2022-02-01	CUST55393	BRG0006	12	TABLET	39000	IDR
+IN6301	2022-02-01	CUST55393	BRG0008	24	TABLET	9800	IDR
+IN6301	2022-02-01	CUST55393	BRG0009	10	BOTOL	31000	IDR
+IN6024	2022-01-27	CUST55394	BRG0001	4	DUS	96000	IDR
+IN6024	2022-01-27	CUST55394	BRG0004	12	TABLET	24500	IDR
+IN6024	2022-01-27	CUST55394	BRG0005	12	TABLET	47000	IDR
+IN6024	2022-01-27	CUST55394	BRG0006	12	TABLET	39000	IDR
+IN6024	2022-01-27	CUST55394	BRG0007	8	BOTOL	64700	IDR
+IN6024	2022-01-27	CUST55394	BRG0008	12	TABLET	9800	IDR
+IN6024	2022-01-27	CUST55394	BRG0010	16	BOTOL	21000	IDR
+IN6184	2022-01-28	CUST55395	BRG0002	1	DUS	112000	IDR
+IN6184	2022-01-28	CUST55395	BRG0003	12	BOTOL	17000	IDR
+IN6184	2022-01-28	CUST55395	BRG0004	25	TABLET	24500	IDR
+IN6184	2022-01-28	CUST55395	BRG0006	25	TABLET	39000	IDR
+IN6307	2022-01-23	CUST55396	BRG0001	4	DUS	96000	IDR
+IN6307	2022-01-23	CUST55396	BRG0002	4	DUS	112000	IDR
+IN6307	2022-01-23	CUST55396	BRG0003	24	BOTOL	17000	IDR
+IN6307	2022-01-23	CUST55396	BRG0004	12	TABLET	24500	IDR
+IN6307	2022-01-23	CUST55396	BRG0005	14	TABLET	47000	IDR
+IN6307	2022-01-23	CUST55396	BRG0006	15	TABLET	39000	IDR
+IN6307	2022-01-23	CUST55396	BRG0007	22	BOTOL	64700	IDR
+IN6308	2022-01-23	CUST55397	BRG0001	8	DUS	96000	IDR
+IN6308	2022-01-23	CUST55397	BRG0006	10	TABLET	39000	IDR
+IN6245	2022-01-30	CUST55397	BRG0008	34	TABLET	9800	IDR
+IN6195	2022-01-31	CUST55398	BRG0004	10	TABLET	24500	IDR
+IN6195	2022-01-31	CUST55398	BRG0007	10	BOTOL	64700	IDR
+IN6195	2022-01-31	CUST55398	BRG0009	67	BOTOL	31000	IDR
+IN6023	2022-02-01	CUST55399	BRG0004	10	TABLET	24500	IDR
+IN6023	2022-02-01	CUST55399	BRG0005	10	TABLET	47000	IDR
+IN6023	2022-02-01	CUST55399	BRG0006	10	TABLET	39000	IDR
+IN6023	2022-02-01	CUST55399	BRG0007	10	BOTOL	64700	IDR
+IN6023	2022-02-01	CUST55399	BRG0008	10	TABLET	9800	IDR
+IN6023	2022-02-01	CUST55399	BRG0009	67	BOTOL	31000	IDR
+IN6023	2022-02-01	CUST55399	BRG0010	15	BOTOL	21000	IDR
+IN6113	2022-02-01	CUST55382	BRG0001	2	DUS	96000	IDR
+IN6113	2022-02-01	CUST55382	BRG0002	2	DUS	112000	IDR
+IN6113	2022-02-01	CUST55382	BRG0004	12	TABLET	24500	IDR
+IN6113	2022-02-01	CUST55382	BRG0005	12	TABLET	47000	IDR
+IN6259	2022-02-01	CUST55405	BRG0002	25	DUS	112000	IDR
+IN6259	2022-02-01	CUST55405	BRG0003	14	BOTOL	17000	IDR
+IN6259	2022-02-01	CUST55405	BRG0004	18	TABLET	24500	IDR
+IN6259	2022-02-01	CUST55405	BRG0005	18	TABLET	47000	IDR
+IN6259	2022-02-01	CUST55405	BRG0006	19	TABLET	39000	IDR
+IN6063	2022-02-01	CUST55417	BRG0001	12	DUS	96000	IDR
+IN6063	2022-02-01	CUST55417	BRG0002	25	DUS	112000	IDR
+IN6063	2022-02-01	CUST55417	BRG0003	14	BOTOL	17000	IDR
+IN6063	2022-02-01	CUST55417	BRG0004	21	TABLET	24500	IDR
+IN6063	2022-02-01	CUST55417	BRG0005	24	TABLET	47000	IDR
+IN6063	2022-02-01	CUST55417	BRG0006	10	TABLET	39000	IDR
+IN6063	2022-02-01	CUST55417	BRG0007	23	BOTOL	64700	IDR
+IN6063	2022-02-01	CUST55417	BRG0008	12	TABLET	9800	IDR
+IN6063	2022-02-01	CUST55417	BRG0009	10	BOTOL	31000	IDR
+IN6063	2022-02-01	CUST55417	BRG0010	67	BOTOL	21000	IDR
+IN6064	2022-02-02	CUST55380	BRG0004	24	TABLET	24500	IDR
+IN6064	2022-02-02	CUST55380	BRG0005	24	TABLET	47000	IDR
+IN6131	2022-01-28	CUST55418	BRG0009	10	BOTOL	31000	IDR
+IN6131	2022-01-28	CUST55418	BRG0010	27	BOTOL	21000	IDR
+IN6028	2022-01-30	CUST55420	BRG0001	98	DUS	96000	IDR
+IN6028	2022-01-30	CUST55420	BRG0002	5	DUS	112000	IDR
+IN6028	2022-01-30	CUST55420	BRG0003	4	BOTOL	17000	IDR
+IN6028	2022-01-30	CUST55420	BRG0004	8	TABLET	24500	IDR
+IN6028	2022-01-30	CUST55420	BRG0005	9	TABLET	47000	IDR
+IN6028	2022-01-30	CUST55420	BRG0006	10	TABLET	39000	IDR
+IN6028	2022-01-30	CUST55420	BRG0007	7	BOTOL	64700	IDR
+IN6028	2022-01-30	CUST55420	BRG0008	100	TABLET	9800	IDR
+IN6028	2022-01-30	CUST55420	BRG0009	67	BOTOL	31000	IDR
+IN6028	2022-01-30	CUST55420	BRG0010	78	BOTOL	21000	IDR
+IN6306	2022-01-27	CUST55430	BRG0001	45	DUS	96000	IDR
+IN6306	2022-01-27	CUST55430	BRG0004	45	TABLET	24500	IDR
+IN6306	2022-01-27	CUST55430	BRG0005	34	TABLET	47000	IDR
+\.
+
+
+--
+-- TOC entry 3353 (class 0 OID 16585)
+-- Dependencies: 221
+-- Data for Name: table_aggregate; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.table_aggregate (id_penjualan, id_invoice, id_customer, id_barang, tanggal, month, id_distributor, customer, cabang_sales, "group", nama_barang, brand, harga, jumlah_barang, total_harga) FROM stdin;
+IN5978-BRG0001	IN5978	CUST55670	BRG0001	2022-05-25	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9	864000
+IN5979-BRG0009	IN5979	CUST55598	BRG0009	2022-03-28	3	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	18	558000
+IN5980-BRG0003	IN5980	CUST55432	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	20	340000
+IN5981-BRG0004	IN5981	CUST55443	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	76	1862000
+IN5982-BRG0006	IN5982	CUST55535	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5	195000
+IN5983-BRG0003	IN5983	CUST55622	BRG0003	2022-04-21	4	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	67	1139000
+IN5984-BRG0005	IN5984	CUST55714	BRG0005	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	8	376000
+IN5985-BRG0001	IN5985	CUST55640	BRG0001	2022-04-18	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	22	2112000
+IN5986-BRG0002	IN5986	CUST55557	BRG0002	2022-02-15	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9	1008000
+IN5987-BRG0010	IN5987	CUST55659	BRG0010	2022-04-19	4	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	14	294000
+IN5988-BRG0002	IN5988	CUST55551	BRG0002	2022-02-09	2	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	10	1120000
+IN5989-BRG0010	IN5989	CUST55719	BRG0010	2022-05-01	5	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67	1407000
+IN5990-BRG0001	IN5990	CUST55706	BRG0001	2022-05-03	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	10	960000
+IN5991-BRG0005	IN5991	CUST55414	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24	1128000
+IN5992-BRG0002	IN5992	CUST55707	BRG0002	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	23	2576000
+IN5993-BRG0002	IN5993	CUST55671	BRG0002	2022-05-26	5	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1	112000
+IN5994-BRG0002	IN5994	CUST55411	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN5995-BRG0008	IN5995	CUST55607	BRG0008	2022-04-06	4	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	14	137200
+IN5996-BRG0007	IN5996	CUST55656	BRG0007	2022-05-25	5	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22	1423400
+IN5997-BRG0005	IN5997	CUST55380	BRG0005	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	40	1880000
+IN5997-BRG0002	IN5997	CUST55380	BRG0002	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	4	448000
+IN5997-BRG0001	IN5997	CUST55380	BRG0001	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	1	96000
+IN5997-BRG0004	IN5997	CUST55380	BRG0004	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	11	269500
+IN5997-BRG0003	IN5997	CUST55380	BRG0003	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	6	102000
+IN5998-BRG0001	IN5998	CUST55610	BRG0001	2022-04-09	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	23	2208000
+IN5999-BRG0003	IN5999	CUST55632	BRG0003	2022-05-01	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	5	85000
+IN6000-BRG0008	IN6000	CUST55717	BRG0008	2022-06-16	6	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	7	68600
+IN6001-BRG0004	IN6001	CUST55603	BRG0004	2022-04-02	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	21	514500
+IN6002-BRG0007	IN6002	CUST55546	BRG0007	2022-02-04	2	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14	905800
+IN6003-BRG0005	IN6003	CUST55424	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9	423000
+IN6004-BRG0010	IN6004	CUST55729	BRG0010	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	5	105000
+IN6005-BRG0008	IN6005	CUST55447	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12	117600
+IN6006-BRG0005	IN6006	CUST55554	BRG0005	2022-02-12	2	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5	235000
+IN6007-BRG0006	IN6007	CUST55715	BRG0006	2022-05-02	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	9	351000
+IN6008-BRG0004	IN6008	CUST55469	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6009-BRG0008	IN6009	CUST55637	BRG0008	2022-04-28	4	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	76	744800
+IN6010-BRG0001	IN6010	CUST55676	BRG0001	2022-05-31	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	5	480000
+IN6011-BRG0008	IN6011	CUST55567	BRG0008	2022-02-25	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	10	98000
+IN6012-BRG0003	IN6012	CUST55712	BRG0003	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	5	85000
+IN6013-BRG0002	IN6013	CUST55407	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6014-BRG0002	IN6014	CUST55591	BRG0002	2022-03-21	3	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34	3808000
+IN6015-BRG0003	IN6015	CUST55482	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	5	85000
+IN6016-BRG0010	IN6016	CUST55579	BRG0010	2022-03-09	3	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	5	105000
+IN6017-BRG0004	IN6017	CUST55513	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	23	563500
+IN6018-BRG0003	IN6018	CUST55602	BRG0003	2022-04-01	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	14	238000
+IN6019-BRG0004	IN6019	CUST55663	BRG0004	2022-04-20	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6020-BRG0002	IN6020	CUST55581	BRG0002	2022-03-11	3	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1	112000
+IN6021-BRG0001	IN6021	CUST55620	BRG0001	2022-04-19	4	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	7	672000
+IN6022-BRG0005	IN6022	CUST55654	BRG0005	2022-05-23	5	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9	423000
+IN6023-BRG0009	IN6023	CUST55399	BRG0009	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	AMBROXOL HC	VNS	31000	67	2077000
+IN6023-BRG0005	IN6023	CUST55399	BRG0005	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10	470000
+IN6023-BRG0006	IN6023	CUST55399	BRG0006	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6023-BRG0004	IN6023	CUST55399	BRG0004	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10	245000
+IN6023-BRG0008	IN6023	CUST55399	BRG0008	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	10	98000
+IN6023-BRG0007	IN6023	CUST55399	BRG0007	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10	647000
+IN6023-BRG0010	IN6023	CUST55399	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	15	315000
+IN6024-BRG0007	IN6024	CUST55394	BRG0007	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	8	517600
+IN6024-BRG0004	IN6024	CUST55394	BRG0004	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6024-BRG0008	IN6024	CUST55394	BRG0008	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12	117600
+IN6024-BRG0010	IN6024	CUST55394	BRG0010	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	PARACETAMOL	SLCYL	21000	16	336000
+IN6024-BRG0005	IN6024	CUST55394	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6024-BRG0001	IN6024	CUST55394	BRG0001	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	ACYCLOVIR DUS	OGB & PH	96000	4	384000
+IN6024-BRG0006	IN6024	CUST55394	BRG0006	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12	468000
+IN6025-BRG0004	IN6025	CUST55523	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	7	171500
+IN6026-BRG0003	IN6026	CUST55558	BRG0003	2022-02-16	2	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	21	357000
+IN6027-BRG0003	IN6027	CUST55612	BRG0003	2022-04-11	4	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	10	170000
+IN6028-BRG0002	IN6028	CUST55420	BRG0002	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5	560000
+IN6028-BRG0010	IN6028	CUST55420	BRG0010	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	PARACETAMOL	SLCYL	21000	78	1638000
+IN6028-BRG0004	IN6028	CUST55420	BRG0004	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8	196000
+IN6028-BRG0006	IN6028	CUST55420	BRG0006	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6028-BRG0009	IN6028	CUST55420	BRG0009	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67	2077000
+IN6028-BRG0001	IN6028	CUST55420	BRG0001	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98	9408000
+IN6028-BRG0001	IN6028	CUST55420	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98	9408000
+IN6028-BRG0003	IN6028	CUST55420	BRG0003	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMPICILLIN	MARCKS	17000	4	68000
+IN6028-BRG0007	IN6028	CUST55420	BRG0007	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	7	452900
+IN6028-BRG0005	IN6028	CUST55420	BRG0005	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9	423000
+IN6028-BRG0008	IN6028	CUST55420	BRG0008	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	100	980000
+IN6029-BRG0009	IN6029	CUST55389	BRG0009	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	AMBROXOL HC	VNS	31000	18	558000
+IN6029-BRG0005	IN6029	CUST55389	BRG0005	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	7	329000
+IN6029-BRG0008	IN6029	CUST55389	BRG0008	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	8	78400
+IN6029-BRG0010	IN6029	CUST55389	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	4	84000
+IN6029-BRG0006	IN6029	CUST55389	BRG0006	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	7	273000
+IN6029-BRG0010	IN6029	CUST55389	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	20	420000
+IN6029-BRG0003	IN6029	CUST55389	BRG0003	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	5	85000
+IN6029-BRG0001	IN6029	CUST55389	BRG0001	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	1	96000
+IN6029-BRG0007	IN6029	CUST55389	BRG0007	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	14	905800
+IN6029-BRG0004	IN6029	CUST55389	BRG0004	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	7	171500
+IN6030-BRG0004	IN6030	CUST55709	BRG0004	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10	245000
+IN6031-BRG0001	IN6031	CUST55616	BRG0001	2022-04-15	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	4	384000
+IN6032-BRG0004	IN6032	CUST55679	BRG0004	2022-06-03	6	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	23	563500
+IN6033-BRG0009	IN6033	CUST55688	BRG0009	2022-06-12	6	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	34	1054000
+IN6034-BRG0003	IN6034	CUST55562	BRG0003	2022-02-20	2	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	14	238000
+IN6035-BRG0007	IN6035	CUST55626	BRG0007	2022-04-25	4	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	20	1294000
+IN6036-BRG0010	IN6036	CUST55388	BRG0010	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	PARACETAMOL	SLCYL	21000	10	210000
+IN6036-BRG0009	IN6036	CUST55388	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	23	713000
+IN6036-BRG0004	IN6036	CUST55388	BRG0004	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6036-BRG0003	IN6036	CUST55388	BRG0003	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMPICILLIN	MARCKS	17000	15	255000
+IN6036-BRG0009	IN6036	CUST55388	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	22	682000
+IN6037-BRG0002	IN6037	CUST55721	BRG0002	2022-05-03	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	45	5040000
+IN6038-BRG0008	IN6038	CUST55517	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	98	960400
+IN6039-BRG0001	IN6039	CUST55480	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	13	1248000
+IN6040-BRG0001	IN6040	CUST55470	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	10	960000
+IN6041-BRG0001	IN6041	CUST55570	BRG0001	2022-02-28	2	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	5	480000
+IN6042-BRG0009	IN6042	CUST55428	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67	2077000
+IN6043-BRG0001	IN6043	CUST55580	BRG0001	2022-03-10	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9	864000
+IN6044-BRG0005	IN6044	CUST55694	BRG0005	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18	846000
+IN6045-BRG0007	IN6045	CUST55506	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	21	1358700
+IN6046-BRG0002	IN6046	CUST55691	BRG0002	2022-06-15	6	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6047-BRG0006	IN6047	CUST55635	BRG0006	2022-04-26	4	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12	468000
+IN6048-BRG0005	IN6048	CUST55464	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	25	1175000
+IN6049-BRG0010	IN6049	CUST55479	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	9	189000
+IN6050-BRG0005	IN6050	CUST55434	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34	1598000
+IN6051-BRG0004	IN6051	CUST55593	BRG0004	2022-03-23	3	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	15	367500
+IN6052-BRG0006	IN6052	CUST55385	BRG0006	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5	195000
+IN6052-BRG0010	IN6052	CUST55385	BRG0010	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	PARACETAMOL	SLCYL	21000	5	105000
+IN6052-BRG0009	IN6052	CUST55385	BRG0009	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMBROXOL HC	VNS	31000	5	155000
+IN6053-BRG0002	IN6053	CUST55437	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	44	4928000
+IN6054-BRG0006	IN6054	CUST55435	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34	1326000
+IN6055-BRG0004	IN6055	CUST55583	BRG0004	2022-03-13	3	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	4	98000
+IN6056-BRG0002	IN6056	CUST55621	BRG0002	2022-04-20	4	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	100	11200000
+IN6057-BRG0003	IN6057	CUST55648	BRG0003	2022-05-17	5	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	10	170000
+IN6058-BRG0003	IN6058	CUST55532	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	34	578000
+IN6059-BRG0004	IN6059	CUST55683	BRG0004	2022-06-07	6	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	11	269500
+IN6060-BRG0004	IN6060	CUST55543	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	22	539000
+IN6061-BRG0007	IN6061	CUST55566	BRG0007	2022-02-24	2	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12	776400
+IN6062-BRG0001	IN6062	CUST55490	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6063-BRG0010	IN6063	CUST55417	BRG0010	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	PARACETAMOL	SLCYL	21000	67	1407000
+IN6063-BRG0007	IN6063	CUST55417	BRG0007	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	23	1488100
+IN6063-BRG0001	IN6063	CUST55417	BRG0001	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6063-BRG0008	IN6063	CUST55417	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12	117600
+IN6063-BRG0002	IN6063	CUST55417	BRG0002	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6063-BRG0003	IN6063	CUST55417	BRG0003	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	14	238000
+IN6063-BRG0005	IN6063	CUST55417	BRG0005	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24	1128000
+IN6063-BRG0006	IN6063	CUST55417	BRG0006	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6063-BRG0004	IN6063	CUST55417	BRG0004	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	21	514500
+IN6063-BRG0009	IN6063	CUST55417	BRG0009	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMBROXOL HC	VNS	31000	10	310000
+IN6064-BRG0005	IN6064	CUST55380	BRG0005	2022-02-02	2	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24	1128000
+IN6064-BRG0006	IN6064	CUST55515	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6064-BRG0004	IN6064	CUST55380	BRG0004	2022-02-02	2	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	24	588000
+IN6065-BRG0005	IN6065	CUST55474	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	4	188000
+IN6066-BRG0009	IN6066	CUST55538	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	12	372000
+IN6067-BRG0005	IN6067	CUST55704	BRG0005	2022-05-01	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	14	658000
+IN6068-BRG0007	IN6068	CUST55536	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	6	388200
+IN6069-BRG0002	IN6069	CUST55571	BRG0002	2022-03-01	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	4	448000
+IN6070-BRG0006	IN6070	CUST55485	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	23	897000
+IN6071-BRG0007	IN6071	CUST55636	BRG0007	2022-04-27	4	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	95	6146500
+IN6072-BRG0008	IN6072	CUST55477	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	1	9800
+IN6073-BRG0009	IN6073	CUST55628	BRG0009	2022-04-27	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	34	1054000
+IN6074-BRG0003	IN6074	CUST55472	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	98	1666000
+IN6075-BRG0009	IN6075	CUST55638	BRG0009	2022-04-16	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	48	1488000
+IN6076-BRG0005	IN6076	CUST55594	BRG0005	2022-03-24	3	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6077-BRG0002	IN6077	CUST55647	BRG0002	2022-05-16	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6078-BRG0001	IN6078	CUST55600	BRG0001	2022-03-30	3	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6079-BRG0005	IN6079	CUST55494	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34	1598000
+IN6080-BRG0007	IN6080	CUST55596	BRG0007	2022-03-26	3	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14	905800
+IN6081-BRG0004	IN6081	CUST55589	BRG0004	2022-03-19	3	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	25	612500
+IN6082-BRG0002	IN6082	CUST55617	BRG0002	2022-04-16	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	8	896000
+IN6083-BRG0008	IN6083	CUST55487	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	2	19600
+IN6084-BRG0002	IN6084	CUST55471	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	67	7504000
+IN6085-BRG0002	IN6085	CUST55601	BRG0002	2022-03-31	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6086-BRG0003	IN6086	CUST55408	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	14	238000
+IN6087-BRG0001	IN6087	CUST55560	BRG0001	2022-02-18	2	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6088-BRG0009	IN6088	CUST55548	BRG0009	2022-02-06	2	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	10	310000
+IN6089-BRG0007	IN6089	CUST55386	BRG0007	2022-01-25	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9	582300
+IN6090-BRG0006	IN6090	CUST55655	BRG0006	2022-05-24	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	21	819000
+IN6091-BRG0008	IN6091	CUST55687	BRG0008	2022-06-11	6	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	14	137200
+IN6092-BRG0005	IN6092	CUST55584	BRG0005	2022-03-14	3	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	2	94000
+IN6093-BRG0005	IN6093	CUST55674	BRG0005	2022-05-29	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	13	611000
+IN6094-BRG0001	IN6094	CUST55710	BRG0001	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	67	6432000
+IN6095-BRG0009	IN6095	CUST55478	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	5	155000
+IN6096-BRG0002	IN6096	CUST55561	BRG0002	2022-02-19	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6097-BRG0009	IN6097	CUST55718	BRG0009	2022-04-30	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	100	3100000
+IN6098-BRG0010	IN6098	CUST55599	BRG0010	2022-03-29	3	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	19	399000
+IN6099-BRG0008	IN6099	CUST55457	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5	49000
+IN6100-BRG0002	IN6100	CUST55677	BRG0002	2022-06-01	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9	1008000
+IN6101-BRG0004	IN6101	CUST55723	BRG0004	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	20	490000
+IN6102-BRG0003	IN6102	CUST55392	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	11	187000
+IN6102-BRG0007	IN6102	CUST55392	BRG0007	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	24	1552800
+IN6103-BRG0001	IN6103	CUST55496	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	15	1440000
+IN6104-BRG0004	IN6104	CUST55433	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	45	1102500
+IN6105-BRG0001	IN6105	CUST55700	BRG0001	2022-05-02	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	21	2016000
+IN6106-BRG0004	IN6106	CUST55713	BRG0004	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	4	98000
+IN6107-BRG0002	IN6107	CUST55511	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	24	2688000
+IN6108-BRG0004	IN6108	CUST55409	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	21	514500
+IN6109-BRG0003	IN6109	CUST55702	BRG0003	2022-06-16	6	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12	204000
+IN6110-BRG0007	IN6110	CUST55576	BRG0007	2022-03-06	3	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9	582300
+IN6111-BRG0008	IN6111	CUST55657	BRG0008	2022-05-26	5	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12	117600
+IN6112-BRG0007	IN6112	CUST55726	BRG0007	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	34	2199800
+IN6113-BRG0005	IN6113	CUST55382	BRG0005	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6113-BRG0001	IN6113	CUST55400	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6113-BRG0001	IN6113	CUST55382	BRG0001	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	2	192000
+IN6113-BRG0004	IN6113	CUST55382	BRG0004	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6113-BRG0002	IN6113	CUST55382	BRG0002	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	2	224000
+IN6114-BRG0010	IN6114	CUST55569	BRG0010	2022-02-27	2	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	98	2058000
+IN6115-BRG0007	IN6115	CUST55716	BRG0007	2022-05-03	5	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	10	647000
+IN6116-BRG0006	IN6116	CUST55455	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67	2613000
+IN6117-BRG0008	IN6117	CUST55667	BRG0008	2022-05-22	5	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5	49000
+IN6118-BRG0003	IN6118	CUST55502	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	19	323000
+IN6119-BRG0010	IN6119	CUST55449	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	14	294000
+IN6120-BRG0006	IN6120	CUST55465	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	14	546000
+IN6121-BRG0007	IN6121	CUST55666	BRG0007	2022-05-21	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	98	6340600
+IN6122-BRG0006	IN6122	CUST55445	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	21	819000
+IN6123-BRG0008	IN6123	CUST55697	BRG0008	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12	117600
+IN6124-BRG0003	IN6124	CUST55442	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	95	1615000
+IN6125-BRG0003	IN6125	CUST55402	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	14	238000
+IN6126-BRG0005	IN6126	CUST55624	BRG0005	2022-04-23	4	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	45	2115000
+IN6127-BRG0006	IN6127	CUST55625	BRG0006	2022-04-24	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34	1326000
+IN6128-BRG0008	IN6128	CUST55537	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	79	774200
+IN6129-BRG0001	IN6129	CUST55556	BRG0001	2022-02-14	2	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	8	768000
+IN6130-BRG0009	IN6130	CUST55518	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	5	155000
+IN6131-BRG0010	IN6131	CUST55418	BRG0010	2022-01-28	1	TA	APOTEK MAJA	Kuningan	Apotek	PARACETAMOL	SLCYL	21000	27	567000
+IN6131-BRG0009	IN6131	CUST55418	BRG0009	2022-01-28	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	10	310000
+IN6131-BRG0009	IN6131	CUST55418	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	10	310000
+IN6132-BRG0003	IN6132	CUST55708	BRG0003	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	12	204000
+IN6133-BRG0010	IN6133	CUST55429	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	78	1638000
+IN6134-BRG0002	IN6134	CUST55441	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6135-BRG0001	IN6135	CUST55550	BRG0001	2022-02-08	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6136-BRG0001	IN6136	CUST55526	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	78	7488000
+IN6137-BRG0004	IN6137	CUST55573	BRG0004	2022-03-03	3	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9	220500
+IN6138-BRG0002	IN6138	CUST55661	BRG0002	2022-04-18	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	10	1120000
+IN6139-BRG0004	IN6139	CUST55623	BRG0004	2022-04-22	4	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	78	1911000
+IN6140-BRG0006	IN6140	CUST55595	BRG0006	2022-03-25	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25	975000
+IN6141-BRG0002	IN6141	CUST55401	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6142-BRG0005	IN6142	CUST55724	BRG0005	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	45	2115000
+IN6143-BRG0006	IN6143	CUST55705	BRG0006	2022-05-02	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	24	936000
+IN6144-BRG0007	IN6144	CUST55383	BRG0007	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	13	841100
+IN6144-BRG0008	IN6144	CUST55383	BRG0008	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	13	127400
+IN6144-BRG0010	IN6144	CUST55383	BRG0010	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	PARACETAMOL	SLCYL	21000	13	273000
+IN6144-BRG0009	IN6144	CUST55383	BRG0009	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	13	403000
+IN6144-BRG0004	IN6144	CUST55383	BRG0004	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	13	318500
+IN6145-BRG0003	IN6145	CUST55642	BRG0003	2022-04-20	4	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	25	425000
+IN6146-BRG0003	IN6146	CUST55412	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	25	425000
+IN6147-BRG0006	IN6147	CUST55555	BRG0006	2022-02-13	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	4	156000
+IN6148-BRG0007	IN6148	CUST55476	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9	582300
+IN6149-BRG0001	IN6149	CUST55590	BRG0001	2022-03-20	3	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	14	1344000
+IN6150-BRG0002	IN6150	CUST55651	BRG0002	2022-05-20	5	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5	560000
+IN6151-BRG0001	IN6151	CUST55720	BRG0001	2022-05-02	5	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	78	7488000
+IN6152-BRG0003	IN6152	CUST55512	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	10	170000
+IN6153-BRG0008	IN6153	CUST55597	BRG0008	2022-03-27	3	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	18	176400
+IN6154-BRG0002	IN6154	CUST55641	BRG0002	2022-04-19	4	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6155-BRG0005	IN6155	CUST55382	BRG0005	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6155-BRG0010	IN6155	CUST55382	BRG0010	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	12	252000
+IN6155-BRG0004	IN6155	CUST55382	BRG0004	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6155-BRG0009	IN6155	CUST55382	BRG0009	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	AMBROXOL HC	VNS	31000	25	775000
+IN6155-BRG0006	IN6155	CUST55382	BRG0006	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	22	858000
+IN6155-BRG0007	IN6155	CUST55382	BRG0007	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10	647000
+IN6155-BRG0008	IN6155	CUST55382	BRG0008	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	25	245000
+IN6155-BRG0003	IN6155	CUST55382	BRG0003	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	9	153000
+IN6156-BRG0009	IN6156	CUST55608	BRG0009	2022-04-07	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	24	744000
+IN6157-BRG0004	IN6157	CUST55613	BRG0004	2022-04-12	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	67	1641500
+IN6158-BRG0010	IN6158	CUST55699	BRG0010	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	14	294000
+IN6159-BRG0010	IN6159	CUST55689	BRG0010	2022-06-13	6	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67	1407000
+IN6160-BRG0003	IN6160	CUST55672	BRG0003	2022-05-27	5	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	5	85000
+IN6161-BRG0001	IN6161	CUST55466	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	24	2304000
+IN6162-BRG0004	IN6162	CUST55503	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6163-BRG0002	IN6163	CUST55421	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	5	560000
+IN6164-BRG0009	IN6164	CUST55578	BRG0009	2022-03-08	3	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	1	31000
+IN6165-BRG0003	IN6165	CUST55722	BRG0003	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	34	578000
+IN6166-BRG0006	IN6166	CUST55675	BRG0006	2022-05-30	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	1	39000
+IN6167-BRG0002	IN6167	CUST55491	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6168-BRG0005	IN6168	CUST55644	BRG0005	2022-05-13	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24	1128000
+IN6169-BRG0006	IN6169	CUST55665	BRG0006	2022-05-20	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67	2613000
+IN6170-BRG0006	IN6170	CUST55505	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	14	546000
+IN6171-BRG0006	IN6171	CUST55545	BRG0006	2022-02-03	2	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25	975000
+IN6172-BRG0002	IN6172	CUST55497	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6173-BRG0001	IN6173	CUST55406	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	12	1152000
+IN6174-BRG0003	IN6174	CUST55618	BRG0003	2022-04-17	4	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	9	153000
+IN6175-BRG0005	IN6175	CUST55404	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18	846000
+IN6176-BRG0004	IN6176	CUST55403	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	18	441000
+IN6177-BRG0006	IN6177	CUST55585	BRG0006	2022-03-15	3	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	17	663000
+IN6178-BRG0006	IN6178	CUST55695	BRG0006	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	18	702000
+IN6179-BRG0010	IN6179	CUST55669	BRG0010	2022-05-24	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	8	168000
+IN6180-BRG0005	IN6180	CUST55614	BRG0005	2022-04-13	4	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	98	4606000
+IN6181-BRG0010	IN6181	CUST55549	BRG0010	2022-02-07	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	130	2730000
+IN6182-BRG0008	IN6182	CUST55577	BRG0008	2022-03-07	3	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	13	127400
+IN6183-BRG0003	IN6183	CUST55498	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	25	425000
+IN6184-BRG0002	IN6184	CUST55395	BRG0002	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1	112000
+IN6184-BRG0004	IN6184	CUST55395	BRG0004	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	25	612500
+IN6184-BRG0003	IN6184	CUST55395	BRG0003	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12	204000
+IN6184-BRG0006	IN6184	CUST55395	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25	975000
+IN6185-BRG0004	IN6185	CUST55483	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9	220500
+IN6186-BRG0001	IN6186	CUST55500	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	18	1728000
+IN6187-BRG0007	IN6187	CUST55606	BRG0007	2022-04-05	4	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	25	1617500
+IN6188-BRG0005	IN6188	CUST55454	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10	470000
+IN6189-BRG0005	IN6189	CUST55574	BRG0005	2022-03-04	3	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1	47000
+IN6190-BRG0001	IN6190	CUST55390	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	2	192000
+IN6190-BRG0001	IN6190	CUST55390	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	40	3840000
+IN6191-BRG0003	IN6191	CUST55422	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	4	68000
+IN6192-BRG0006	IN6192	CUST55645	BRG0006	2022-05-14	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6193-BRG0003	IN6193	CUST55588	BRG0003	2022-03-18	3	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	12	204000
+IN6194-BRG0009	IN6194	CUST55658	BRG0009	2022-04-18	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	25	775000
+IN6195-BRG0009	IN6195	CUST55398	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67	2077000
+IN6195-BRG0007	IN6195	CUST55398	BRG0007	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	10	647000
+IN6195-BRG0004	IN6195	CUST55398	BRG0004	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	10	245000
+IN6196-BRG0001	IN6196	CUST55530	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	45	4320000
+IN6197-BRG0001	IN6197	CUST55630	BRG0001	2022-04-29	4	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	34	3264000
+IN6198-BRG0001	IN6198	CUST55680	BRG0001	2022-06-04	6	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	4	384000
+IN6199-BRG0010	IN6199	CUST55509	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	25	525000
+IN6200-BRG0004	IN6200	CUST55473	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	5	122500
+IN6201-BRG0009	IN6201	CUST55668	BRG0009	2022-05-23	5	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	4	124000
+IN6202-BRG0003	IN6202	CUST55528	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	34	578000
+IN6203-BRG0005	IN6203	CUST55524	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	100	4700000
+IN6204-BRG0008	IN6204	CUST55727	BRG0008	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	34	333200
+IN6205-BRG0001	IN6205	CUST55520	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	8	768000
+IN6206-BRG0003	IN6206	CUST55582	BRG0003	2022-03-12	3	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	23	391000
+IN6207-BRG0006	IN6207	CUST55605	BRG0006	2022-04-04	4	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12	468000
+IN6208-BRG0006	IN6208	CUST55475	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	8	312000
+IN6209-BRG0001	IN6209	CUST55586	BRG0001	2022-03-16	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	11	1056000
+IN6210-BRG0007	IN6210	CUST55486	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	4	258800
+IN6211-BRG0002	IN6211	CUST55501	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	18	2016000
+IN6212-BRG0002	IN6212	CUST55681	BRG0002	2022-06-05	6	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	2	224000
+IN6213-BRG0002	IN6213	CUST55701	BRG0002	2022-05-03	5	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	22	2464000
+IN6214-BRG0002	IN6214	CUST55461	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	21	2352000
+IN6215-BRG0001	IN6215	CUST55510	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	14	1344000
+IN6216-BRG0007	IN6216	CUST55456	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	98	6340600
+IN6217-BRG0003	IN6217	CUST55438	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	5	85000
+IN6218-BRG0010	IN6218	CUST55639	BRG0010	2022-04-17	4	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	21	441000
+IN6219-BRG0001	IN6219	CUST55436	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	34	3264000
+IN6220-BRG0005	IN6220	CUST55444	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	48	2256000
+IN6221-BRG0005	IN6221	CUST55504	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	25	1175000
+IN6222-BRG0003	IN6222	CUST55678	BRG0003	2022-06-02	6	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	1	17000
+IN6223-BRG0004	IN6223	CUST55633	BRG0004	2022-05-02	5	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	6	147000
+IN6224-BRG0004	IN6224	CUST55559	BRG0004	2022-02-17	2	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	22	539000
+IN6225-BRG0002	IN6225	CUST55631	BRG0002	2022-04-30	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	44	4928000
+IN6226-BRG0007	IN6226	CUST55416	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	23	1488100
+IN6227-BRG0002	IN6227	CUST55611	BRG0002	2022-04-10	4	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6228-BRG0009	IN6228	CUST55508	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	12	372000
+IN6229-BRG0006	IN6229	CUST55575	BRG0006	2022-03-05	3	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5	195000
+IN6230-BRG0004	IN6230	CUST55413	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14	343000
+IN6231-BRG0004	IN6231	CUST55563	BRG0004	2022-02-21	2	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	24	588000
+IN6232-BRG0010	IN6232	CUST55609	BRG0010	2022-04-08	4	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	10	210000
+IN6233-BRG0001	IN6233	CUST55450	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	24	2304000
+IN6234-BRG0003	IN6234	CUST55552	BRG0003	2022-02-10	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	67	1139000
+IN6235-BRG0002	IN6235	CUST55451	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	10	1120000
+IN6236-BRG0005	IN6236	CUST55684	BRG0005	2022-06-08	6	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6237-BRG0004	IN6237	CUST55619	BRG0004	2022-04-18	4	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10	245000
+IN6238-BRG0001	IN6238	CUST55460	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9	864000
+IN6239-BRG0003	IN6239	CUST55572	BRG0003	2022-03-02	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	8	136000
+IN6240-BRG0002	IN6240	CUST55541	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	48	5376000
+IN6241-BRG0001	IN6241	CUST55440	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	79	7584000
+IN6242-BRG0005	IN6242	CUST55534	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	44	2068000
+IN6243-BRG0006	IN6243	CUST55525	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67	2613000
+IN6244-BRG0003	IN6244	CUST55542	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	21	357000
+IN6245-BRG0008	IN6245	CUST55397	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	34	333200
+IN6246-BRG0004	IN6246	CUST55533	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	34	833000
+IN6247-BRG0006	IN6247	CUST55425	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6248-BRG0008	IN6248	CUST55427	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	100	980000
+IN6249-BRG0004	IN6249	CUST55703	BRG0004	2022-04-30	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	25	612500
+IN6250-BRG0002	IN6250	CUST55587	BRG0002	2022-03-17	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12	1344000
+IN6251-BRG0005	IN6251	CUST55387	BRG0005	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5	235000
+IN6251-BRG0001	IN6251	CUST55387	BRG0001	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	2	192000
+IN6251-BRG0008	IN6251	CUST55387	BRG0008	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	1	9800
+IN6251-BRG0004	IN6251	CUST55387	BRG0004	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	5	122500
+IN6251-BRG0007	IN6251	CUST55387	BRG0007	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12	776400
+IN6251-BRG0003	IN6251	CUST55387	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12	204000
+IN6251-BRG0009	IN6251	CUST55387	BRG0009	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMBROXOL HC	VNS	31000	12	372000
+IN6251-BRG0008	IN6251	CUST55387	BRG0008	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5	49000
+IN6251-BRG0002	IN6251	CUST55387	BRG0002	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	2	224000
+IN6251-BRG0006	IN6251	CUST55387	BRG0006	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5	195000
+IN6252-BRG0004	IN6252	CUST55649	BRG0004	2022-05-18	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	67	1641500
+IN6253-BRG0002	IN6253	CUST55431	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34	3808000
+IN6254-BRG0005	IN6254	CUST55544	BRG0005	2022-02-02	2	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6255-BRG0007	IN6255	CUST55446	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22	1423400
+IN6256-BRG0004	IN6256	CUST55463	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6257-BRG0006	IN6257	CUST55615	BRG0006	2022-04-14	4	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5	195000
+IN6258-BRG0005	IN6258	CUST55484	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1	47000
+IN6259-BRG0002	IN6259	CUST55405	BRG0002	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25	2800000
+IN6259-BRG0003	IN6259	CUST55405	BRG0003	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	AMPICILLIN	MARCKS	17000	14	238000
+IN6259-BRG0006	IN6259	CUST55405	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	19	741000
+IN6259-BRG0004	IN6259	CUST55405	BRG0004	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	18	441000
+IN6259-BRG0005	IN6259	CUST55405	BRG0005	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18	846000
+IN6260-BRG0005	IN6260	CUST55564	BRG0005	2022-02-22	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10	470000
+IN6261-BRG0008	IN6261	CUST55547	BRG0008	2022-02-05	2	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	24	235200
+IN6262-BRG0010	IN6262	CUST55419	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67	1407000
+IN6263-BRG0003	IN6263	CUST55452	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	130	2210000
+IN6264-BRG0001	IN6264	CUST55690	BRG0001	2022-06-14	6	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	15	1440000
+IN6265-BRG0009	IN6265	CUST55698	BRG0009	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	25	775000
+IN6266-BRG0002	IN6266	CUST55531	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34	3808000
+IN6267-BRG0010	IN6267	CUST55459	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	8	168000
+IN6268-BRG0003	IN6268	CUST55692	BRG0003	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	25	425000
+IN6269-BRG0004	IN6269	CUST55453	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6270-BRG0007	IN6270	CUST55696	BRG0007	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	19	1229300
+IN6271-BRG0005	IN6271	CUST55604	BRG0005	2022-04-03	4	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	22	1034000
+IN6272-BRG0001	IN6272	CUST55650	BRG0001	2022-05-19	5	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98	9408000
+IN6273-BRG0005	IN6273	CUST55634	BRG0005	2022-05-03	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	79	3713000
+IN6274-BRG0004	IN6274	CUST55423	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8	196000
+IN6275-BRG0009	IN6275	CUST55568	BRG0009	2022-02-26	2	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	67	2077000
+IN6276-BRG0002	IN6276	CUST55481	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	1	112000
+IN6277-BRG0010	IN6277	CUST55629	BRG0010	2022-04-28	4	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	34	714000
+IN6278-BRG0004	IN6278	CUST55499	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	14	343000
+IN6279-BRG0004	IN6279	CUST55529	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	20	490000
+IN6280-BRG0005	IN6280	CUST55384	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1	47000
+IN6280-BRG0009	IN6280	CUST55384	BRG0009	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	AMBROXOL HC	VNS	31000	10	310000
+IN6280-BRG0002	IN6280	CUST55384	BRG0002	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	3	336000
+IN6280-BRG0007	IN6280	CUST55384	BRG0007	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10	647000
+IN6280-BRG0001	IN6280	CUST55384	BRG0001	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	2	192000
+IN6280-BRG0010	IN6280	CUST55384	BRG0010	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	10	210000
+IN6280-BRG0005	IN6280	CUST55384	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5	235000
+IN6280-BRG0006	IN6280	CUST55384	BRG0006	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25	975000
+IN6281-BRG0006	IN6281	CUST55415	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6282-BRG0004	IN6282	CUST55673	BRG0004	2022-05-28	5	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9	220500
+IN6283-BRG0005	IN6283	CUST55664	BRG0005	2022-05-19	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10	470000
+IN6284-BRG0001	IN6284	CUST55540	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	76	7296000
+IN6285-BRG0001	IN6285	CUST55646	BRG0001	2022-05-15	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	130	12480000
+IN6286-BRG0003	IN6286	CUST55468	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	120	2040000
+IN6287-BRG0006	IN6287	CUST55391	BRG0006	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	20	780000
+IN6287-BRG0010	IN6287	CUST55391	BRG0010	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	16	336000
+IN6287-BRG0002	IN6287	CUST55391	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	17	1904000
+IN6288-BRG0003	IN6288	CUST55682	BRG0003	2022-06-06	6	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	17	289000
+IN6289-BRG0003	IN6289	CUST55492	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	25	425000
+IN6290-BRG0003	IN6290	CUST55592	BRG0003	2022-03-22	3	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	67	1139000
+IN6291-BRG0010	IN6291	CUST55489	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	11	231000
+IN6292-BRG0002	IN6292	CUST55467	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	10	1120000
+IN6293-BRG0010	IN6293	CUST55519	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	4	84000
+IN6294-BRG0002	IN6294	CUST55711	BRG0002	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	98	10976000
+IN6295-BRG0004	IN6295	CUST55653	BRG0004	2022-05-22	5	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8	196000
+IN6296-BRG0006	IN6296	CUST55685	BRG0006	2022-06-09	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12	468000
+IN6297-BRG0008	IN6297	CUST55381	BRG0008	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	30	294000
+IN6297-BRG0005	IN6297	CUST55381	BRG0005	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	15	705000
+IN6297-BRG0007	IN6297	CUST55381	BRG0007	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12	776400
+IN6297-BRG0002	IN6297	CUST55381	BRG0002	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5	560000
+IN6298-BRG0003	IN6298	CUST55652	BRG0003	2022-05-21	5	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	4	68000
+IN6299-BRG0005	IN6299	CUST55514	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12	564000
+IN6300-BRG0008	IN6300	CUST55507	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	22	215600
+IN6301-BRG0009	IN6301	CUST55393	BRG0009	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	AMBROXOL HC	VNS	31000	10	310000
+IN6301-BRG0004	IN6301	CUST55393	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6301-BRG0008	IN6301	CUST55393	BRG0008	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	24	235200
+IN6301-BRG0006	IN6301	CUST55393	BRG0006	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12	468000
+IN6302-BRG0006	IN6302	CUST55565	BRG0006	2022-02-23	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	120	4680000
+IN6303-BRG0010	IN6303	CUST55539	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	95	1995000
+IN6304-BRG0009	IN6304	CUST55728	BRG0009	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	44	1364000
+IN6305-BRG0004	IN6305	CUST55493	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14	343000
+IN6306-BRG0004	IN6306	CUST55430	BRG0004	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	45	1102500
+IN6306-BRG0001	IN6306	CUST55430	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	45	4320000
+IN6306-BRG0005	IN6306	CUST55430	BRG0005	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34	1598000
+IN6307-BRG0007	IN6307	CUST55396	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22	1423400
+IN6307-BRG0001	IN6307	CUST55396	BRG0001	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ACYCLOVIR DUS	OGB & PH	96000	4	384000
+IN6307-BRG0005	IN6307	CUST55396	BRG0005	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	14	658000
+IN6307-BRG0003	IN6307	CUST55396	BRG0003	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	AMPICILLIN	MARCKS	17000	24	408000
+IN6307-BRG0002	IN6307	CUST55396	BRG0002	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	4	448000
+IN6307-BRG0007	IN6307	CUST55396	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14	905800
+IN6307-BRG0004	IN6307	CUST55396	BRG0004	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12	294000
+IN6307-BRG0006	IN6307	CUST55396	BRG0006	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	15	585000
+IN6308-BRG0001	IN6308	CUST55397	BRG0001	2022-01-23	1	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	8	768000
+IN6308-BRG0006	IN6308	CUST55397	BRG0006	2022-01-23	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10	390000
+IN6308-BRG0007	IN6308	CUST55516	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	67	4334900
+IN6309-BRG0008	IN6309	CUST55627	BRG0008	2022-04-26	4	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	45	441000
+IN6310-BRG0004	IN6310	CUST55693	BRG0004	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14	343000
+IN6311-BRG0007	IN6311	CUST55426	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	7	452900
+IN6312-BRG0006	IN6312	CUST55725	BRG0006	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34	1326000
+IN6313-BRG0001	IN6313	CUST55660	BRG0001	2022-04-20	4	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	24	2304000
+IN6314-BRG0002	IN6314	CUST55527	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	45	5040000
+IN6315-BRG0004	IN6315	CUST55643	BRG0004	2022-04-21	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14	343000
+IN6316-BRG0003	IN6316	CUST55662	BRG0003	2022-04-19	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	120	2040000
+IN6317-BRG0003	IN6317	CUST55522	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	10	170000
+IN6318-BRG0003	IN6318	CUST55462	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	22	374000
+IN6319-BRG0004	IN6319	CUST55553	BRG0004	2022-02-11	2	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	98	2401000
+IN6320-BRG0006	IN6320	CUST55495	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67	2613000
+IN6321-BRG0001	IN6321	CUST55410	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	22	2112000
+IN6322-BRG0009	IN6322	CUST55488	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	17	527000
+IN6323-BRG0004	IN6323	CUST55439	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	6	147000
+IN6324-BRG0007	IN6324	CUST55686	BRG0007	2022-06-10	6	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	25	1617500
+IN6325-BRG0002	IN6325	CUST55521	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9	1008000
+IN6326-BRG0009	IN6326	CUST55458	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	4	124000
+IN6327-BRG0009	IN6327	CUST55448	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	25	775000
+\.
+
+
+--
+-- TOC entry 3352 (class 0 OID 16580)
+-- Dependencies: 220
+-- Data for Name: table_base; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.table_base (id_penjualan, id_invoice, id_customer, id_barang, tanggal, month, id_distributor, customer, cabang_sales, "group", nama_barang, brand, harga, jumlah_barang) FROM stdin;
+IN5978-BRG0001	IN5978	CUST55670	BRG0001	2022-05-25	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9
+IN5979-BRG0009	IN5979	CUST55598	BRG0009	2022-03-28	3	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	18
+IN5980-BRG0003	IN5980	CUST55432	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	20
+IN5981-BRG0004	IN5981	CUST55443	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	76
+IN5982-BRG0006	IN5982	CUST55535	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5
+IN5983-BRG0003	IN5983	CUST55622	BRG0003	2022-04-21	4	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	67
+IN5984-BRG0005	IN5984	CUST55714	BRG0005	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	8
+IN5985-BRG0001	IN5985	CUST55640	BRG0001	2022-04-18	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	22
+IN5986-BRG0002	IN5986	CUST55557	BRG0002	2022-02-15	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9
+IN5987-BRG0010	IN5987	CUST55659	BRG0010	2022-04-19	4	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	14
+IN5988-BRG0002	IN5988	CUST55551	BRG0002	2022-02-09	2	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	10
+IN5989-BRG0010	IN5989	CUST55719	BRG0010	2022-05-01	5	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67
+IN5990-BRG0001	IN5990	CUST55706	BRG0001	2022-05-03	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	10
+IN5991-BRG0005	IN5991	CUST55414	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24
+IN5992-BRG0002	IN5992	CUST55707	BRG0002	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	23
+IN5993-BRG0002	IN5993	CUST55671	BRG0002	2022-05-26	5	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1
+IN5994-BRG0002	IN5994	CUST55411	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN5995-BRG0008	IN5995	CUST55607	BRG0008	2022-04-06	4	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	14
+IN5996-BRG0007	IN5996	CUST55656	BRG0007	2022-05-25	5	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22
+IN5997-BRG0005	IN5997	CUST55380	BRG0005	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	40
+IN5997-BRG0002	IN5997	CUST55380	BRG0002	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	4
+IN5997-BRG0001	IN5997	CUST55380	BRG0001	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	1
+IN5997-BRG0004	IN5997	CUST55380	BRG0004	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	11
+IN5997-BRG0003	IN5997	CUST55380	BRG0003	2022-01-20	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	6
+IN5998-BRG0001	IN5998	CUST55610	BRG0001	2022-04-09	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	23
+IN5999-BRG0003	IN5999	CUST55632	BRG0003	2022-05-01	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	5
+IN6000-BRG0008	IN6000	CUST55717	BRG0008	2022-06-16	6	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	7
+IN6001-BRG0004	IN6001	CUST55603	BRG0004	2022-04-02	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	21
+IN6002-BRG0007	IN6002	CUST55546	BRG0007	2022-02-04	2	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14
+IN6003-BRG0005	IN6003	CUST55424	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9
+IN6004-BRG0010	IN6004	CUST55729	BRG0010	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	5
+IN6005-BRG0008	IN6005	CUST55447	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12
+IN6006-BRG0005	IN6006	CUST55554	BRG0005	2022-02-12	2	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5
+IN6007-BRG0006	IN6007	CUST55715	BRG0006	2022-05-02	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	9
+IN6008-BRG0004	IN6008	CUST55469	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6009-BRG0008	IN6009	CUST55637	BRG0008	2022-04-28	4	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	76
+IN6010-BRG0001	IN6010	CUST55676	BRG0001	2022-05-31	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	5
+IN6011-BRG0008	IN6011	CUST55567	BRG0008	2022-02-25	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	10
+IN6012-BRG0003	IN6012	CUST55712	BRG0003	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	5
+IN6013-BRG0002	IN6013	CUST55407	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6014-BRG0002	IN6014	CUST55591	BRG0002	2022-03-21	3	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34
+IN6015-BRG0003	IN6015	CUST55482	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	5
+IN6016-BRG0010	IN6016	CUST55579	BRG0010	2022-03-09	3	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	5
+IN6017-BRG0004	IN6017	CUST55513	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	23
+IN6018-BRG0003	IN6018	CUST55602	BRG0003	2022-04-01	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	14
+IN6019-BRG0004	IN6019	CUST55663	BRG0004	2022-04-20	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6020-BRG0002	IN6020	CUST55581	BRG0002	2022-03-11	3	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1
+IN6021-BRG0001	IN6021	CUST55620	BRG0001	2022-04-19	4	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	7
+IN6022-BRG0005	IN6022	CUST55654	BRG0005	2022-05-23	5	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9
+IN6023-BRG0009	IN6023	CUST55399	BRG0009	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	AMBROXOL HC	VNS	31000	67
+IN6023-BRG0005	IN6023	CUST55399	BRG0005	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10
+IN6023-BRG0006	IN6023	CUST55399	BRG0006	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6023-BRG0004	IN6023	CUST55399	BRG0004	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10
+IN6023-BRG0008	IN6023	CUST55399	BRG0008	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	10
+IN6023-BRG0007	IN6023	CUST55399	BRG0007	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10
+IN6023-BRG0010	IN6023	CUST55399	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	15
+IN6024-BRG0007	IN6024	CUST55394	BRG0007	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	8
+IN6024-BRG0004	IN6024	CUST55394	BRG0004	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6024-BRG0008	IN6024	CUST55394	BRG0008	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12
+IN6024-BRG0010	IN6024	CUST55394	BRG0010	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	PARACETAMOL	SLCYL	21000	16
+IN6024-BRG0005	IN6024	CUST55394	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6024-BRG0001	IN6024	CUST55394	BRG0001	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	ACYCLOVIR DUS	OGB & PH	96000	4
+IN6024-BRG0006	IN6024	CUST55394	BRG0006	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12
+IN6025-BRG0004	IN6025	CUST55523	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	7
+IN6026-BRG0003	IN6026	CUST55558	BRG0003	2022-02-16	2	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	21
+IN6027-BRG0003	IN6027	CUST55612	BRG0003	2022-04-11	4	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	10
+IN6028-BRG0002	IN6028	CUST55420	BRG0002	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5
+IN6028-BRG0010	IN6028	CUST55420	BRG0010	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	PARACETAMOL	SLCYL	21000	78
+IN6028-BRG0004	IN6028	CUST55420	BRG0004	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8
+IN6028-BRG0006	IN6028	CUST55420	BRG0006	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6028-BRG0009	IN6028	CUST55420	BRG0009	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67
+IN6028-BRG0001	IN6028	CUST55420	BRG0001	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98
+IN6028-BRG0001	IN6028	CUST55420	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98
+IN6028-BRG0003	IN6028	CUST55420	BRG0003	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMPICILLIN	MARCKS	17000	4
+IN6028-BRG0007	IN6028	CUST55420	BRG0007	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	7
+IN6028-BRG0005	IN6028	CUST55420	BRG0005	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	9
+IN6028-BRG0008	IN6028	CUST55420	BRG0008	2022-01-30	1	TA	APOTEK MERDEKA	Bandung	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	100
+IN6029-BRG0009	IN6029	CUST55389	BRG0009	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	AMBROXOL HC	VNS	31000	18
+IN6029-BRG0005	IN6029	CUST55389	BRG0005	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	7
+IN6029-BRG0008	IN6029	CUST55389	BRG0008	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	8
+IN6029-BRG0010	IN6029	CUST55389	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	4
+IN6029-BRG0006	IN6029	CUST55389	BRG0006	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	7
+IN6029-BRG0010	IN6029	CUST55389	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	20
+IN6029-BRG0003	IN6029	CUST55389	BRG0003	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	5
+IN6029-BRG0001	IN6029	CUST55389	BRG0001	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	1
+IN6029-BRG0007	IN6029	CUST55389	BRG0007	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	14
+IN6029-BRG0004	IN6029	CUST55389	BRG0004	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	7
+IN6030-BRG0004	IN6030	CUST55709	BRG0004	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10
+IN6031-BRG0001	IN6031	CUST55616	BRG0001	2022-04-15	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	4
+IN6032-BRG0004	IN6032	CUST55679	BRG0004	2022-06-03	6	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	23
+IN6033-BRG0009	IN6033	CUST55688	BRG0009	2022-06-12	6	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	34
+IN6034-BRG0003	IN6034	CUST55562	BRG0003	2022-02-20	2	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	14
+IN6035-BRG0007	IN6035	CUST55626	BRG0007	2022-04-25	4	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	20
+IN6036-BRG0010	IN6036	CUST55388	BRG0010	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	PARACETAMOL	SLCYL	21000	10
+IN6036-BRG0009	IN6036	CUST55388	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	23
+IN6036-BRG0004	IN6036	CUST55388	BRG0004	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6036-BRG0003	IN6036	CUST55388	BRG0003	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMPICILLIN	MARCKS	17000	15
+IN6036-BRG0009	IN6036	CUST55388	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	22
+IN6037-BRG0002	IN6037	CUST55721	BRG0002	2022-05-03	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	45
+IN6038-BRG0008	IN6038	CUST55517	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	98
+IN6039-BRG0001	IN6039	CUST55480	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	13
+IN6040-BRG0001	IN6040	CUST55470	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	10
+IN6041-BRG0001	IN6041	CUST55570	BRG0001	2022-02-28	2	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	5
+IN6042-BRG0009	IN6042	CUST55428	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67
+IN6043-BRG0001	IN6043	CUST55580	BRG0001	2022-03-10	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9
+IN6044-BRG0005	IN6044	CUST55694	BRG0005	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18
+IN6045-BRG0007	IN6045	CUST55506	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	21
+IN6046-BRG0002	IN6046	CUST55691	BRG0002	2022-06-15	6	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6047-BRG0006	IN6047	CUST55635	BRG0006	2022-04-26	4	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12
+IN6048-BRG0005	IN6048	CUST55464	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	25
+IN6049-BRG0010	IN6049	CUST55479	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	9
+IN6050-BRG0005	IN6050	CUST55434	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34
+IN6051-BRG0004	IN6051	CUST55593	BRG0004	2022-03-23	3	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	15
+IN6052-BRG0006	IN6052	CUST55385	BRG0006	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5
+IN6052-BRG0010	IN6052	CUST55385	BRG0010	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	PARACETAMOL	SLCYL	21000	5
+IN6052-BRG0009	IN6052	CUST55385	BRG0009	2022-01-23	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMBROXOL HC	VNS	31000	5
+IN6053-BRG0002	IN6053	CUST55437	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	44
+IN6054-BRG0006	IN6054	CUST55435	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34
+IN6055-BRG0004	IN6055	CUST55583	BRG0004	2022-03-13	3	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	4
+IN6056-BRG0002	IN6056	CUST55621	BRG0002	2022-04-20	4	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	100
+IN6057-BRG0003	IN6057	CUST55648	BRG0003	2022-05-17	5	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	10
+IN6058-BRG0003	IN6058	CUST55532	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	34
+IN6059-BRG0004	IN6059	CUST55683	BRG0004	2022-06-07	6	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	11
+IN6060-BRG0004	IN6060	CUST55543	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	22
+IN6061-BRG0007	IN6061	CUST55566	BRG0007	2022-02-24	2	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12
+IN6062-BRG0001	IN6062	CUST55490	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6063-BRG0010	IN6063	CUST55417	BRG0010	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	PARACETAMOL	SLCYL	21000	67
+IN6063-BRG0007	IN6063	CUST55417	BRG0007	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	23
+IN6063-BRG0001	IN6063	CUST55417	BRG0001	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6063-BRG0008	IN6063	CUST55417	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12
+IN6063-BRG0002	IN6063	CUST55417	BRG0002	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6063-BRG0003	IN6063	CUST55417	BRG0003	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	14
+IN6063-BRG0005	IN6063	CUST55417	BRG0005	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24
+IN6063-BRG0006	IN6063	CUST55417	BRG0006	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6063-BRG0004	IN6063	CUST55417	BRG0004	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	21
+IN6063-BRG0009	IN6063	CUST55417	BRG0009	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMBROXOL HC	VNS	31000	10
+IN6064-BRG0005	IN6064	CUST55380	BRG0005	2022-02-02	2	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24
+IN6064-BRG0006	IN6064	CUST55515	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6064-BRG0004	IN6064	CUST55380	BRG0004	2022-02-02	2	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	24
+IN6065-BRG0005	IN6065	CUST55474	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	4
+IN6066-BRG0009	IN6066	CUST55538	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	12
+IN6067-BRG0005	IN6067	CUST55704	BRG0005	2022-05-01	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	14
+IN6068-BRG0007	IN6068	CUST55536	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	6
+IN6069-BRG0002	IN6069	CUST55571	BRG0002	2022-03-01	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	4
+IN6070-BRG0006	IN6070	CUST55485	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	23
+IN6071-BRG0007	IN6071	CUST55636	BRG0007	2022-04-27	4	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	95
+IN6072-BRG0008	IN6072	CUST55477	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	1
+IN6073-BRG0009	IN6073	CUST55628	BRG0009	2022-04-27	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	34
+IN6074-BRG0003	IN6074	CUST55472	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	98
+IN6075-BRG0009	IN6075	CUST55638	BRG0009	2022-04-16	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	48
+IN6076-BRG0005	IN6076	CUST55594	BRG0005	2022-03-24	3	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6077-BRG0002	IN6077	CUST55647	BRG0002	2022-05-16	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6078-BRG0001	IN6078	CUST55600	BRG0001	2022-03-30	3	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6079-BRG0005	IN6079	CUST55494	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34
+IN6080-BRG0007	IN6080	CUST55596	BRG0007	2022-03-26	3	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14
+IN6081-BRG0004	IN6081	CUST55589	BRG0004	2022-03-19	3	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	25
+IN6082-BRG0002	IN6082	CUST55617	BRG0002	2022-04-16	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	8
+IN6083-BRG0008	IN6083	CUST55487	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	2
+IN6084-BRG0002	IN6084	CUST55471	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	67
+IN6085-BRG0002	IN6085	CUST55601	BRG0002	2022-03-31	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6086-BRG0003	IN6086	CUST55408	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	14
+IN6087-BRG0001	IN6087	CUST55560	BRG0001	2022-02-18	2	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6088-BRG0009	IN6088	CUST55548	BRG0009	2022-02-06	2	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	10
+IN6089-BRG0007	IN6089	CUST55386	BRG0007	2022-01-25	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9
+IN6090-BRG0006	IN6090	CUST55655	BRG0006	2022-05-24	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	21
+IN6091-BRG0008	IN6091	CUST55687	BRG0008	2022-06-11	6	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	14
+IN6092-BRG0005	IN6092	CUST55584	BRG0005	2022-03-14	3	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	2
+IN6093-BRG0005	IN6093	CUST55674	BRG0005	2022-05-29	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	13
+IN6094-BRG0001	IN6094	CUST55710	BRG0001	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	67
+IN6095-BRG0009	IN6095	CUST55478	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	5
+IN6096-BRG0002	IN6096	CUST55561	BRG0002	2022-02-19	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6097-BRG0009	IN6097	CUST55718	BRG0009	2022-04-30	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	100
+IN6098-BRG0010	IN6098	CUST55599	BRG0010	2022-03-29	3	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	19
+IN6099-BRG0008	IN6099	CUST55457	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5
+IN6100-BRG0002	IN6100	CUST55677	BRG0002	2022-06-01	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9
+IN6101-BRG0004	IN6101	CUST55723	BRG0004	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	20
+IN6102-BRG0003	IN6102	CUST55392	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	11
+IN6102-BRG0007	IN6102	CUST55392	BRG0007	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	24
+IN6103-BRG0001	IN6103	CUST55496	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	15
+IN6104-BRG0004	IN6104	CUST55433	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	45
+IN6105-BRG0001	IN6105	CUST55700	BRG0001	2022-05-02	5	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	21
+IN6106-BRG0004	IN6106	CUST55713	BRG0004	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	4
+IN6107-BRG0002	IN6107	CUST55511	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	24
+IN6108-BRG0004	IN6108	CUST55409	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	21
+IN6109-BRG0003	IN6109	CUST55702	BRG0003	2022-06-16	6	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12
+IN6110-BRG0007	IN6110	CUST55576	BRG0007	2022-03-06	3	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9
+IN6111-BRG0008	IN6111	CUST55657	BRG0008	2022-05-26	5	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12
+IN6112-BRG0007	IN6112	CUST55726	BRG0007	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	34
+IN6113-BRG0005	IN6113	CUST55382	BRG0005	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6113-BRG0001	IN6113	CUST55400	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6113-BRG0001	IN6113	CUST55382	BRG0001	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	2
+IN6113-BRG0004	IN6113	CUST55382	BRG0004	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6113-BRG0002	IN6113	CUST55382	BRG0002	2022-02-01	2	TA	KLINIK GM	Jakarta	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	2
+IN6114-BRG0010	IN6114	CUST55569	BRG0010	2022-02-27	2	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	98
+IN6115-BRG0007	IN6115	CUST55716	BRG0007	2022-05-03	5	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	10
+IN6116-BRG0006	IN6116	CUST55455	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67
+IN6117-BRG0008	IN6117	CUST55667	BRG0008	2022-05-22	5	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5
+IN6118-BRG0003	IN6118	CUST55502	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	19
+IN6119-BRG0010	IN6119	CUST55449	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	14
+IN6120-BRG0006	IN6120	CUST55465	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	14
+IN6121-BRG0007	IN6121	CUST55666	BRG0007	2022-05-21	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	98
+IN6122-BRG0006	IN6122	CUST55445	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	21
+IN6123-BRG0008	IN6123	CUST55697	BRG0008	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	12
+IN6124-BRG0003	IN6124	CUST55442	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	95
+IN6125-BRG0003	IN6125	CUST55402	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	14
+IN6126-BRG0005	IN6126	CUST55624	BRG0005	2022-04-23	4	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	45
+IN6127-BRG0006	IN6127	CUST55625	BRG0006	2022-04-24	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34
+IN6128-BRG0008	IN6128	CUST55537	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	79
+IN6129-BRG0001	IN6129	CUST55556	BRG0001	2022-02-14	2	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	8
+IN6130-BRG0009	IN6130	CUST55518	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	5
+IN6131-BRG0010	IN6131	CUST55418	BRG0010	2022-01-28	1	TA	APOTEK MAJA	Kuningan	Apotek	PARACETAMOL	SLCYL	21000	27
+IN6131-BRG0009	IN6131	CUST55418	BRG0009	2022-01-28	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	10
+IN6131-BRG0009	IN6131	CUST55418	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	10
+IN6132-BRG0003	IN6132	CUST55708	BRG0003	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	12
+IN6133-BRG0010	IN6133	CUST55429	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	78
+IN6134-BRG0002	IN6134	CUST55441	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6135-BRG0001	IN6135	CUST55550	BRG0001	2022-02-08	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6136-BRG0001	IN6136	CUST55526	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	78
+IN6137-BRG0004	IN6137	CUST55573	BRG0004	2022-03-03	3	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9
+IN6138-BRG0002	IN6138	CUST55661	BRG0002	2022-04-18	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	10
+IN6139-BRG0004	IN6139	CUST55623	BRG0004	2022-04-22	4	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	78
+IN6140-BRG0006	IN6140	CUST55595	BRG0006	2022-03-25	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25
+IN6141-BRG0002	IN6141	CUST55401	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6142-BRG0005	IN6142	CUST55724	BRG0005	2022-05-01	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	45
+IN6143-BRG0006	IN6143	CUST55705	BRG0006	2022-05-02	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	24
+IN6144-BRG0007	IN6144	CUST55383	BRG0007	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	13
+IN6144-BRG0008	IN6144	CUST55383	BRG0008	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	13
+IN6144-BRG0010	IN6144	CUST55383	BRG0010	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	PARACETAMOL	SLCYL	21000	13
+IN6144-BRG0009	IN6144	CUST55383	BRG0009	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	13
+IN6144-BRG0004	IN6144	CUST55383	BRG0004	2022-01-22	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	13
+IN6145-BRG0003	IN6145	CUST55642	BRG0003	2022-04-20	4	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	25
+IN6146-BRG0003	IN6146	CUST55412	BRG0003	2022-01-27	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	25
+IN6147-BRG0006	IN6147	CUST55555	BRG0006	2022-02-13	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	4
+IN6148-BRG0007	IN6148	CUST55476	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	9
+IN6149-BRG0001	IN6149	CUST55590	BRG0001	2022-03-20	3	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	14
+IN6150-BRG0002	IN6150	CUST55651	BRG0002	2022-05-20	5	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5
+IN6151-BRG0001	IN6151	CUST55720	BRG0001	2022-05-02	5	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	78
+IN6152-BRG0003	IN6152	CUST55512	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	10
+IN6153-BRG0008	IN6153	CUST55597	BRG0008	2022-03-27	3	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	18
+IN6154-BRG0002	IN6154	CUST55641	BRG0002	2022-04-19	4	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6155-BRG0005	IN6155	CUST55382	BRG0005	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6155-BRG0010	IN6155	CUST55382	BRG0010	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	12
+IN6155-BRG0004	IN6155	CUST55382	BRG0004	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6155-BRG0009	IN6155	CUST55382	BRG0009	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	AMBROXOL HC	VNS	31000	25
+IN6155-BRG0006	IN6155	CUST55382	BRG0006	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	22
+IN6155-BRG0007	IN6155	CUST55382	BRG0007	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10
+IN6155-BRG0008	IN6155	CUST55382	BRG0008	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	25
+IN6155-BRG0003	IN6155	CUST55382	BRG0003	2022-01-21	1	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	9
+IN6156-BRG0009	IN6156	CUST55608	BRG0009	2022-04-07	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	24
+IN6157-BRG0004	IN6157	CUST55613	BRG0004	2022-04-12	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	67
+IN6158-BRG0010	IN6158	CUST55699	BRG0010	2022-05-01	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	14
+IN6159-BRG0010	IN6159	CUST55689	BRG0010	2022-06-13	6	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67
+IN6160-BRG0003	IN6160	CUST55672	BRG0003	2022-05-27	5	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	5
+IN6161-BRG0001	IN6161	CUST55466	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	24
+IN6162-BRG0004	IN6162	CUST55503	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6163-BRG0002	IN6163	CUST55421	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	5
+IN6164-BRG0009	IN6164	CUST55578	BRG0009	2022-03-08	3	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	1
+IN6165-BRG0003	IN6165	CUST55722	BRG0003	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	34
+IN6166-BRG0006	IN6166	CUST55675	BRG0006	2022-05-30	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	1
+IN6167-BRG0002	IN6167	CUST55491	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6168-BRG0005	IN6168	CUST55644	BRG0005	2022-05-13	5	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	24
+IN6169-BRG0006	IN6169	CUST55665	BRG0006	2022-05-20	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67
+IN6170-BRG0006	IN6170	CUST55505	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	14
+IN6171-BRG0006	IN6171	CUST55545	BRG0006	2022-02-03	2	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25
+IN6172-BRG0002	IN6172	CUST55497	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6173-BRG0001	IN6173	CUST55406	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	12
+IN6174-BRG0003	IN6174	CUST55618	BRG0003	2022-04-17	4	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	9
+IN6175-BRG0005	IN6175	CUST55404	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18
+IN6176-BRG0004	IN6176	CUST55403	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	18
+IN6177-BRG0006	IN6177	CUST55585	BRG0006	2022-03-15	3	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	17
+IN6178-BRG0006	IN6178	CUST55695	BRG0006	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	18
+IN6179-BRG0010	IN6179	CUST55669	BRG0010	2022-05-24	5	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	8
+IN6180-BRG0005	IN6180	CUST55614	BRG0005	2022-04-13	4	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	98
+IN6181-BRG0010	IN6181	CUST55549	BRG0010	2022-02-07	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	130
+IN6182-BRG0008	IN6182	CUST55577	BRG0008	2022-03-07	3	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	13
+IN6183-BRG0003	IN6183	CUST55498	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	25
+IN6184-BRG0002	IN6184	CUST55395	BRG0002	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	1
+IN6184-BRG0004	IN6184	CUST55395	BRG0004	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	25
+IN6184-BRG0003	IN6184	CUST55395	BRG0003	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12
+IN6184-BRG0006	IN6184	CUST55395	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25
+IN6185-BRG0004	IN6185	CUST55483	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9
+IN6186-BRG0001	IN6186	CUST55500	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	18
+IN6187-BRG0007	IN6187	CUST55606	BRG0007	2022-04-05	4	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	25
+IN6188-BRG0005	IN6188	CUST55454	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10
+IN6189-BRG0005	IN6189	CUST55574	BRG0005	2022-03-04	3	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1
+IN6190-BRG0001	IN6190	CUST55390	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	2
+IN6190-BRG0001	IN6190	CUST55390	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	40
+IN6191-BRG0003	IN6191	CUST55422	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	4
+IN6192-BRG0006	IN6192	CUST55645	BRG0006	2022-05-14	5	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6193-BRG0003	IN6193	CUST55588	BRG0003	2022-03-18	3	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	12
+IN6194-BRG0009	IN6194	CUST55658	BRG0009	2022-04-18	4	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	25
+IN6195-BRG0009	IN6195	CUST55398	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	67
+IN6195-BRG0007	IN6195	CUST55398	BRG0007	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	10
+IN6195-BRG0004	IN6195	CUST55398	BRG0004	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	10
+IN6196-BRG0001	IN6196	CUST55530	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	45
+IN6197-BRG0001	IN6197	CUST55630	BRG0001	2022-04-29	4	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	34
+IN6198-BRG0001	IN6198	CUST55680	BRG0001	2022-06-04	6	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	4
+IN6199-BRG0010	IN6199	CUST55509	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	25
+IN6200-BRG0004	IN6200	CUST55473	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	5
+IN6201-BRG0009	IN6201	CUST55668	BRG0009	2022-05-23	5	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	4
+IN6202-BRG0003	IN6202	CUST55528	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	34
+IN6203-BRG0005	IN6203	CUST55524	BRG0005	2022-01-31	1	TA	KLINIK GM	Jakarta	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	100
+IN6204-BRG0008	IN6204	CUST55727	BRG0008	2022-06-16	6	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	34
+IN6205-BRG0001	IN6205	CUST55520	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	8
+IN6206-BRG0003	IN6206	CUST55582	BRG0003	2022-03-12	3	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	23
+IN6207-BRG0006	IN6207	CUST55605	BRG0006	2022-04-04	4	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12
+IN6208-BRG0006	IN6208	CUST55475	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	8
+IN6209-BRG0001	IN6209	CUST55586	BRG0001	2022-03-16	3	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	11
+IN6210-BRG0007	IN6210	CUST55486	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	4
+IN6211-BRG0002	IN6211	CUST55501	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	18
+IN6212-BRG0002	IN6212	CUST55681	BRG0002	2022-06-05	6	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	2
+IN6213-BRG0002	IN6213	CUST55701	BRG0002	2022-05-03	5	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	22
+IN6214-BRG0002	IN6214	CUST55461	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	21
+IN6215-BRG0001	IN6215	CUST55510	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	14
+IN6216-BRG0007	IN6216	CUST55456	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	98
+IN6217-BRG0003	IN6217	CUST55438	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	5
+IN6218-BRG0010	IN6218	CUST55639	BRG0010	2022-04-17	4	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	21
+IN6219-BRG0001	IN6219	CUST55436	BRG0001	2022-01-27	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	34
+IN6220-BRG0005	IN6220	CUST55444	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	48
+IN6221-BRG0005	IN6221	CUST55504	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	25
+IN6222-BRG0003	IN6222	CUST55678	BRG0003	2022-06-02	6	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	1
+IN6223-BRG0004	IN6223	CUST55633	BRG0004	2022-05-02	5	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	6
+IN6224-BRG0004	IN6224	CUST55559	BRG0004	2022-02-17	2	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	22
+IN6225-BRG0002	IN6225	CUST55631	BRG0002	2022-04-30	4	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	44
+IN6226-BRG0007	IN6226	CUST55416	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	23
+IN6227-BRG0002	IN6227	CUST55611	BRG0002	2022-04-10	4	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6228-BRG0009	IN6228	CUST55508	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	12
+IN6229-BRG0006	IN6229	CUST55575	BRG0006	2022-03-05	3	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5
+IN6230-BRG0004	IN6230	CUST55413	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14
+IN6231-BRG0004	IN6231	CUST55563	BRG0004	2022-02-21	2	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	24
+IN6232-BRG0010	IN6232	CUST55609	BRG0010	2022-04-08	4	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	10
+IN6233-BRG0001	IN6233	CUST55450	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	24
+IN6234-BRG0003	IN6234	CUST55552	BRG0003	2022-02-10	2	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	67
+IN6235-BRG0002	IN6235	CUST55451	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	10
+IN6236-BRG0005	IN6236	CUST55684	BRG0005	2022-06-08	6	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6237-BRG0004	IN6237	CUST55619	BRG0004	2022-04-18	4	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	10
+IN6238-BRG0001	IN6238	CUST55460	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	9
+IN6239-BRG0003	IN6239	CUST55572	BRG0003	2022-03-02	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	8
+IN6240-BRG0002	IN6240	CUST55541	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	48
+IN6241-BRG0001	IN6241	CUST55440	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	79
+IN6242-BRG0005	IN6242	CUST55534	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	44
+IN6243-BRG0006	IN6243	CUST55525	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67
+IN6244-BRG0003	IN6244	CUST55542	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	21
+IN6245-BRG0008	IN6245	CUST55397	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	34
+IN6246-BRG0004	IN6246	CUST55533	BRG0004	2022-01-28	1	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	34
+IN6247-BRG0006	IN6247	CUST55425	BRG0006	2022-01-28	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6248-BRG0008	IN6248	CUST55427	BRG0008	2022-01-30	1	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	100
+IN6249-BRG0004	IN6249	CUST55703	BRG0004	2022-04-30	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	25
+IN6250-BRG0002	IN6250	CUST55587	BRG0002	2022-03-17	3	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	12
+IN6251-BRG0005	IN6251	CUST55387	BRG0005	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5
+IN6251-BRG0001	IN6251	CUST55387	BRG0001	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	2
+IN6251-BRG0008	IN6251	CUST55387	BRG0008	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	1
+IN6251-BRG0004	IN6251	CUST55387	BRG0004	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	5
+IN6251-BRG0007	IN6251	CUST55387	BRG0007	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12
+IN6251-BRG0003	IN6251	CUST55387	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	12
+IN6251-BRG0009	IN6251	CUST55387	BRG0009	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMBROXOL HC	VNS	31000	12
+IN6251-BRG0008	IN6251	CUST55387	BRG0008	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	5
+IN6251-BRG0002	IN6251	CUST55387	BRG0002	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	2
+IN6251-BRG0006	IN6251	CUST55387	BRG0006	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5
+IN6252-BRG0004	IN6252	CUST55649	BRG0004	2022-05-18	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	67
+IN6253-BRG0002	IN6253	CUST55431	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34
+IN6254-BRG0005	IN6254	CUST55544	BRG0005	2022-02-02	2	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6255-BRG0007	IN6255	CUST55446	BRG0007	2022-01-31	1	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22
+IN6256-BRG0004	IN6256	CUST55463	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6257-BRG0006	IN6257	CUST55615	BRG0006	2022-04-14	4	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	5
+IN6258-BRG0005	IN6258	CUST55484	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1
+IN6259-BRG0002	IN6259	CUST55405	BRG0002	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	25
+IN6259-BRG0003	IN6259	CUST55405	BRG0003	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	AMPICILLIN	MARCKS	17000	14
+IN6259-BRG0006	IN6259	CUST55405	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	19
+IN6259-BRG0004	IN6259	CUST55405	BRG0004	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	18
+IN6259-BRG0005	IN6259	CUST55405	BRG0005	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	18
+IN6260-BRG0005	IN6260	CUST55564	BRG0005	2022-02-22	2	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10
+IN6261-BRG0008	IN6261	CUST55547	BRG0008	2022-02-05	2	TA	KLINIK GM	Jakarta	Klinik	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	24
+IN6262-BRG0010	IN6262	CUST55419	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	67
+IN6263-BRG0003	IN6263	CUST55452	BRG0003	2022-01-31	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	130
+IN6264-BRG0001	IN6264	CUST55690	BRG0001	2022-06-14	6	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	15
+IN6265-BRG0009	IN6265	CUST55698	BRG0009	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	25
+IN6266-BRG0002	IN6266	CUST55531	BRG0002	2022-02-01	2	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	34
+IN6267-BRG0010	IN6267	CUST55459	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	8
+IN6268-BRG0003	IN6268	CUST55692	BRG0003	2022-06-16	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	25
+IN6269-BRG0004	IN6269	CUST55453	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6270-BRG0007	IN6270	CUST55696	BRG0007	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	19
+IN6271-BRG0005	IN6271	CUST55604	BRG0005	2022-04-03	4	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	22
+IN6272-BRG0001	IN6272	CUST55650	BRG0001	2022-05-19	5	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	98
+IN6273-BRG0005	IN6273	CUST55634	BRG0005	2022-05-03	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	79
+IN6274-BRG0004	IN6274	CUST55423	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8
+IN6275-BRG0009	IN6275	CUST55568	BRG0009	2022-02-26	2	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	67
+IN6276-BRG0002	IN6276	CUST55481	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	1
+IN6277-BRG0010	IN6277	CUST55629	BRG0010	2022-04-28	4	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	34
+IN6278-BRG0004	IN6278	CUST55499	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	14
+IN6279-BRG0004	IN6279	CUST55529	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	20
+IN6280-BRG0005	IN6280	CUST55384	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	1
+IN6280-BRG0009	IN6280	CUST55384	BRG0009	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	AMBROXOL HC	VNS	31000	10
+IN6280-BRG0002	IN6280	CUST55384	BRG0002	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	3
+IN6280-BRG0007	IN6280	CUST55384	BRG0007	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ERGOTAMINE COFFEINE	ETIKAL	64700	10
+IN6280-BRG0001	IN6280	CUST55384	BRG0001	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	2
+IN6280-BRG0010	IN6280	CUST55384	BRG0010	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	10
+IN6280-BRG0005	IN6280	CUST55384	BRG0005	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	5
+IN6280-BRG0006	IN6280	CUST55384	BRG0006	2022-01-23	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	25
+IN6281-BRG0006	IN6281	CUST55415	BRG0006	2022-01-30	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6282-BRG0004	IN6282	CUST55673	BRG0004	2022-05-28	5	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	9
+IN6283-BRG0005	IN6283	CUST55664	BRG0005	2022-05-19	5	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	10
+IN6284-BRG0001	IN6284	CUST55540	BRG0001	2022-01-23	1	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	76
+IN6285-BRG0001	IN6285	CUST55646	BRG0001	2022-05-15	5	TD	KLINIK SAHABAT	Tangerang	Klinik	ACYCLOVIR DUS	OGB & PH	96000	130
+IN6286-BRG0003	IN6286	CUST55468	BRG0003	2022-01-23	1	EPM	APOTEK SAHABAT	Padang	Apotek	AMPICILLIN	MARCKS	17000	120
+IN6287-BRG0006	IN6287	CUST55391	BRG0006	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	20
+IN6287-BRG0010	IN6287	CUST55391	BRG0010	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	16
+IN6287-BRG0002	IN6287	CUST55391	BRG0002	2022-01-30	1	TD	KLINIK SAHABAT	Tangerang	Klinik	ALERGINE TABLET SALUT	ETIKAL	112000	17
+IN6288-BRG0003	IN6288	CUST55682	BRG0003	2022-06-06	6	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	17
+IN6289-BRG0003	IN6289	CUST55492	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	25
+IN6290-BRG0003	IN6290	CUST55592	BRG0003	2022-03-22	3	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	67
+IN6291-BRG0010	IN6291	CUST55489	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	11
+IN6292-BRG0002	IN6292	CUST55467	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	10
+IN6293-BRG0010	IN6293	CUST55519	BRG0010	2022-02-01	2	TD	KLINIK SAHABAT	Tangerang	Klinik	PARACETAMOL	SLCYL	21000	4
+IN6294-BRG0002	IN6294	CUST55711	BRG0002	2022-05-03	5	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	98
+IN6295-BRG0004	IN6295	CUST55653	BRG0004	2022-05-22	5	TA	APOTEK MERDEKA	Bandung	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	8
+IN6296-BRG0006	IN6296	CUST55685	BRG0006	2022-06-09	6	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12
+IN6297-BRG0008	IN6297	CUST55381	BRG0008	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	30
+IN6297-BRG0005	IN6297	CUST55381	BRG0005	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	15
+IN6297-BRG0007	IN6297	CUST55381	BRG0007	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	12
+IN6297-BRG0002	IN6297	CUST55381	BRG0002	2022-01-20	1	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	5
+IN6298-BRG0003	IN6298	CUST55652	BRG0003	2022-05-21	5	TA	KLINIK GM	Jakarta	Klinik	AMPICILLIN	MARCKS	17000	4
+IN6299-BRG0005	IN6299	CUST55514	BRG0005	2022-01-27	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	12
+IN6300-BRG0008	IN6300	CUST55507	BRG0008	2022-02-01	2	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	22
+IN6301-BRG0009	IN6301	CUST55393	BRG0009	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	AMBROXOL HC	VNS	31000	10
+IN6301-BRG0004	IN6301	CUST55393	BRG0004	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6301-BRG0008	IN6301	CUST55393	BRG0008	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	24
+IN6301-BRG0006	IN6301	CUST55393	BRG0006	2022-02-01	2	EPM	APOTEK SAHABAT	Padang	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	12
+IN6302-BRG0006	IN6302	CUST55565	BRG0006	2022-02-23	2	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	120
+IN6303-BRG0010	IN6303	CUST55539	BRG0010	2022-01-28	1	TA	KLINIK GM	Jakarta	Klinik	PARACETAMOL	SLCYL	21000	95
+IN6304-BRG0009	IN6304	CUST55728	BRG0009	2022-04-30	4	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	44
+IN6305-BRG0004	IN6305	CUST55493	BRG0004	2022-01-30	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14
+IN6306-BRG0004	IN6306	CUST55430	BRG0004	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	45
+IN6306-BRG0001	IN6306	CUST55430	BRG0001	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ACYCLOVIR DUS	OGB & PH	96000	45
+IN6306-BRG0005	IN6306	CUST55430	BRG0005	2022-01-27	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	34
+IN6307-BRG0007	IN6307	CUST55396	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	22
+IN6307-BRG0001	IN6307	CUST55396	BRG0001	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ACYCLOVIR DUS	OGB & PH	96000	4
+IN6307-BRG0005	IN6307	CUST55396	BRG0005	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	KLORPROMAZINA TABLET SALUT SELAPUT 100 MG	SLCYL	47000	14
+IN6307-BRG0003	IN6307	CUST55396	BRG0003	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	AMPICILLIN	MARCKS	17000	24
+IN6307-BRG0002	IN6307	CUST55396	BRG0002	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	4
+IN6307-BRG0007	IN6307	CUST55396	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	14
+IN6307-BRG0004	IN6307	CUST55396	BRG0004	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	12
+IN6307-BRG0006	IN6307	CUST55396	BRG0006	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	15
+IN6308-BRG0001	IN6308	CUST55397	BRG0001	2022-01-23	1	TA	KLINIK GM	Jakarta	Klinik	ACYCLOVIR DUS	OGB & PH	96000	8
+IN6308-BRG0006	IN6308	CUST55397	BRG0006	2022-01-23	1	TA	KLINIK GM	Jakarta	Klinik	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	10
+IN6308-BRG0007	IN6308	CUST55516	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	67
+IN6309-BRG0008	IN6309	CUST55627	BRG0008	2022-04-26	4	EPM	APOTEK TAPAK	Aceh	Apotek	TETRACYCLINE KAPSUL 250 MG	MARCKS	9800	45
+IN6310-BRG0004	IN6310	CUST55693	BRG0004	2022-04-30	4	EPM	APOTEK SAHABAT	Padang	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14
+IN6311-BRG0007	IN6311	CUST55426	BRG0007	2022-01-23	1	TA	APOTEK MAJA	Kuningan	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	7
+IN6312-BRG0006	IN6312	CUST55725	BRG0006	2022-05-02	5	EPM	APOTEK TAPAK	Aceh	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	34
+IN6313-BRG0001	IN6313	CUST55660	BRG0001	2022-04-20	4	TA	APOTEK MERDEKA	Bandung	Apotek	ACYCLOVIR DUS	OGB & PH	96000	24
+IN6314-BRG0002	IN6314	CUST55527	BRG0002	2022-01-28	1	TA	APOTEK SINAR JAYA	Bekasi	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	45
+IN6315-BRG0004	IN6315	CUST55643	BRG0004	2022-04-21	4	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	14
+IN6316-BRG0003	IN6316	CUST55662	BRG0003	2022-04-19	4	TA	APOTEK SINAR JAYA	Bekasi	Apotek	AMPICILLIN	MARCKS	17000	120
+IN6317-BRG0003	IN6317	CUST55522	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	10
+IN6318-BRG0003	IN6318	CUST55462	BRG0003	2022-01-23	1	EPM	APOTEK TAPAK	Aceh	Apotek	AMPICILLIN	MARCKS	17000	22
+IN6319-BRG0004	IN6319	CUST55553	BRG0004	2022-02-11	2	TA	APOTEK MAJA	Kuningan	Apotek	TRAMADOL KAPSUL 50 MG	VNS	24500	98
+IN6320-BRG0006	IN6320	CUST55495	BRG0006	2022-02-01	2	TA	APOTEK MERDEKA	Bandung	Apotek	KETOCONAZOLE TABLET 200 MG	OGB & PH	39000	67
+IN6321-BRG0001	IN6321	CUST55410	BRG0001	2022-01-31	1	EPM	APOTEK TAPAK	Aceh	Apotek	ACYCLOVIR DUS	OGB & PH	96000	22
+IN6322-BRG0009	IN6322	CUST55488	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	17
+IN6323-BRG0004	IN6323	CUST55439	BRG0004	2022-01-30	1	TD	KLINIK DR. ANDRI	Lampung	Klinik	TRAMADOL KAPSUL 50 MG	VNS	24500	6
+IN6324-BRG0007	IN6324	CUST55686	BRG0007	2022-06-10	6	EPM	APOTEK SAHABAT	Padang	Apotek	ERGOTAMINE COFFEINE	ETIKAL	64700	25
+IN6325-BRG0002	IN6325	CUST55521	BRG0002	2022-01-28	1	EPM	APOTEK SAHABAT	Padang	Apotek	ALERGINE TABLET SALUT	ETIKAL	112000	9
+IN6326-BRG0009	IN6326	CUST55458	BRG0009	2022-01-31	1	TA	APOTEK MERDEKA	Bandung	Apotek	AMBROXOL HC	VNS	31000	4
+IN6327-BRG0009	IN6327	CUST55448	BRG0009	2022-01-27	1	TA	APOTEK MAJA	Kuningan	Apotek	AMBROXOL HC	VNS	31000	25
+\.
+
+
+--
+-- TOC entry 3203 (class 2606 OID 16560)
+-- Name: barang barang_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.barang
+    ADD CONSTRAINT barang_pkey PRIMARY KEY (kode_barang);
+
+
+--
+-- TOC entry 3201 (class 2606 OID 16553)
+-- Name: pelanggan pelanggan_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pelanggan
+    ADD CONSTRAINT pelanggan_pkey PRIMARY KEY (id_customer);
+
+
+-- Completed on 2023-02-28 17:24:00
+
+--
+-- PostgreSQL database dump complete
+--
+
